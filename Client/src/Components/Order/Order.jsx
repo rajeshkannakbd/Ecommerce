@@ -12,11 +12,6 @@ const Order = () => {
   const { cartItems, setCartItems } = useContext(cartContext);
   const { total } = useContext(Totalcontext);
   let navigate = useNavigate();
-  const alert = () => {
-    window.alert("order placed");
-    navigate("/");
-    setCartItems([]);
-  };
   const handleOrder = async (e) => {
     e.preventDefault();
   const orderData = {
@@ -121,6 +116,7 @@ const Order = () => {
                   className=" text-start "
                   type="radio"
                   name="payment"
+                  value="cash on delivery"
                 />
                 Cash On Delivery
               </label>
@@ -131,6 +127,7 @@ const Order = () => {
                   className=" text-start "
                   type="radio"
                   name="payment"
+                  value="online payment"
                 />
                 Online Payment
               </label>
