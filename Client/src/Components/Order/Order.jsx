@@ -14,6 +14,7 @@ const Order = () => {
   let navigate = useNavigate();
   const handleOrder = async (e) => {
     e.preventDefault();
+    setShowErrors(true)
   const orderData = {
     name,
     email,
@@ -23,7 +24,6 @@ const Order = () => {
     cartItems,
     total
   };
-
   try {
     const response = await axios.post("http://localhost:5000/order", orderData);
 
@@ -53,7 +53,6 @@ const Order = () => {
             <input
               type="text"
               id="name"
-              required
               value={name}
               onChange={(e) => setName(e.target.value)}
               className=" m-2   outline outline-1 "
@@ -67,7 +66,6 @@ const Order = () => {
             <input
               type="text"
               id="mobile"
-              required
               value={mobileNumber}
               onChange={(e) => setMobileNumber(e.target.value)}
               className=" m-2   outline outline-1 "
@@ -144,7 +142,6 @@ const Order = () => {
             Place Order
           </button>
           </form>
-          
         </div>
       </div>
     </>

@@ -71,10 +71,10 @@ const Cart = () => {
               <div className="flex flex-col justify-between flex-grow">
                 <h2 className="font-semibold text-lg mb-2">{product.title}</h2>
                 <h2 className="font-normal text-lg p-3 mb-2">{product.description}</h2>
-                <div className=" flex flex-row m-0">
+                {/* <div className=" flex flex-row m-0">
                 <h2 className="font-normal text-lg p-3 mb-2">Ratings: <span className=" font-medium text-green-700">{product.rating.rate}</span></h2>
                 <h2 className="font-normal text-lg p-3 mb-2">Stocks: <span className=" font-medium text-green-700">{product.rating.count}</span></h2>
-                </div>
+                </div> */}
                 <h4 className="text-green-700 font-bold text-xl mb-4">
                   ₹{Number(product.price).toLocaleString("en-IN")}
                 </h4>

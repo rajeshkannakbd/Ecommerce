@@ -8,9 +8,9 @@ const ProductsList = () => {
   const { cartItems, setCartItems } = useContext(cartContext);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch("http://localhost:5000/Product")
       .then((res) => res.json())
-      .then((data) => setProducts(data))
+      .then((data) => setProducts(data.product))
       .catch((error) => console.error("Failed to fetch products:", error));
   }, []);
   const handleAdd = (product) => {
@@ -41,7 +41,7 @@ const ProductsList = () => {
                 {product.description}
               </p>
               <div className=" flex">
-              <h1 className="text-sm text-gray-600 mb-4 line-clamp-2">Ratings : {product.rating.rate} </h1>
+              <h1 className="text-sm text-gray-600 mb-4 line-clamp-2">Ratings : {} </h1>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

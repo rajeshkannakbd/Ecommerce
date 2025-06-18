@@ -4,11 +4,11 @@ import { cartContext, searchContext } from "../App";
 
 const Header = () => {
   const [categories, setCategories] = useState(false);
-  const { cartItems, setCartItems,userName,setUserName } = useContext(cartContext);
+  const { cartItems, setCartItems, userName, setUserName, role, setRole } =
+    useContext(cartContext);
   const { search, setSearch } = useContext(searchContext);
   const navigate = useNavigate();
-  const isthere = userName.length;
-  
+  const isthere = userName.length; 
   // useEffect(() => navigate("/search"), [search]);
   return (
     <div className="header w-full z-20 flex justify-evenly p-4 items-center bg-white shadow-md fixed  top-10">
@@ -163,13 +163,15 @@ const Header = () => {
       {/* Links */}
       <div className="flex gap-8">
         <h2 className="cursor-pointer">
-          <Link to="/">
-            Home
-          </Link>
-
+          <Link to="/">Home</Link>
         </h2>
         <h2 className="cursor-pointer">What's New</h2>
         <h2 className="cursor-pointer">Delivery</h2>
+        {role === "admin" && (
+          <h2 className="cursor-pointer">
+            <Link to="/admin/dashboard">Dashboard</Link>
+          </h2>
+        )}
       </div>
 
       {/* Search */}
@@ -205,26 +207,27 @@ const Header = () => {
       {/* Account & Cart */}
       <div className="account flex gap-6 items-center">
         <Link to="/userdetails">
-        <div className="flex gap-1 items-center cursor-pointer">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 6a3.75 3.75 0 1 1-7.5 0
+          <div className="flex gap-1 items-center cursor-pointer">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0
               3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5
               7.5 0 0 1 14.998 0A17.933 17.933 0 0
               1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-            />
-          </svg>
-          <h2>{isthere === 0 ? "Account" : userName }</h2>
-        </div></Link>
+              />
+            </svg>
+            <h2>{isthere === 0 ? "Account" : userName}</h2>
+          </div>
+        </Link>
 
         <Link to="/cart">
           <div className="flex gap-1 items-center relative">
