@@ -40,7 +40,7 @@ const Login = () => {
           setRole(user.role);
           setIsAuthencate(true);
           if (user.role === "admin") {
-            navigate("/admin/dashboard");
+            navigate("/admin/dashboard/products");
           } else {
             navigate("/cart");
           }

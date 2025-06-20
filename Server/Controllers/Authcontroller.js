@@ -165,3 +165,19 @@ exports.newitem = (req, res) => {
     },
   });
 };
+
+
+exports.deleteitem = async (req,res)=>{
+   const { id } = req.params;
+   
+  try {
+    const deletedProduct = await itemModel.findByIdAndDelete(id);
+    if (!deletedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.status(200).json({ message: 'Product deleted successfully' });
+  } catch (err) {
+    console.error("Delete error:", err);
+    res.status(500).json({ message: 'Server error during deletion' });
+  }
+}
