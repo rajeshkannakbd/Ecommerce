@@ -60,11 +60,11 @@ const Cart = () => {
         <div className="grid grid-cols-1 px-32   gap-6">
           {cartItems.map((product) => (
             <div
-              key={product.id}
+              key={product._id}
               className="card flex flex-row items-center gap-6 border-2 border-black p-6 rounded shadow bg-white"
             >
               <img
-                src={product.image}
+                src={`http://localhost:5000/uploads/${product.image}`}
                 alt="product"
                 className="h-[300px] w-[300px] p-2 object-contain"
               />

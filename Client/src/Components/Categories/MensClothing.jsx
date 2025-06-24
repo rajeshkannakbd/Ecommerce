@@ -8,12 +8,12 @@ const MensClothing = () => {
   let [mensclothing, setMensclothing] = useState([]);
   const{cartItems,setCartItems} = useContext(cartContext)
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch("http://localhost:5000/Product")
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data);
+        setProducts(data.product);
 
-        const men = data.filter(
+        const men = data.product.filter(
           (product) => product.category === "men's clothing"
         );
         setMensclothing(men);
@@ -34,12 +34,12 @@ const isInCart = (id)=>{
       </h1>
       <div className="grid grid-cols-4 gap-6">
         {mensclothing.map((product) => (
-          <div
-            key={product.id}
+          <div 
+            key={product._id}
             className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
           >
             <img
-              src={product.image}
+              src={`http://localhost:5000/uploads/${product.image}`}
               alt={product.title}
               className="h-48 w-full object-contain p-4 bg-white"
             />

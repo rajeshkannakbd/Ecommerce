@@ -21,6 +21,7 @@
     import CreateProduct from "./Components/Admin/CreateProduct";
     import ProtectedRoute from "./Components/Authentification/ProtectedRoute";
 import DasboardLayout from "./Components/Admin/DasboardLayout";
+import ProductsDetailPage from "./ProductsDetailPage";
     export const Totalcontext = createContext();
     export const cartContext = createContext({
       cartItems: [],
@@ -72,7 +73,7 @@ import DasboardLayout from "./Components/Admin/DasboardLayout";
                     <Route path="/jewelery" element={<Jewelery />} />
                     <Route path="/signup" element={<Register />} />
                     <Route path="/login" element={<Login />} />
-                    
+                    <Route path="/ProductDetail/:id" element={<ProductsDetailPage />} />
                     <Route
                       path="/cart"
                       element={
@@ -87,7 +88,7 @@ import DasboardLayout from "./Components/Admin/DasboardLayout";
                     />
                     <Route path="/search" element={<Search />} />
                     <Route path="/userdetails" element={<UserDetails />} />
-                    <Route
+                    {/* <Route
               path="/admin/dashboard"
               element={
                 <AdminRoutes>
@@ -98,7 +99,7 @@ import DasboardLayout from "./Components/Admin/DasboardLayout";
               <Route index element={<Dasboard />} />
               <Route path="products" element={<Products/>} />
               <Route path="products/create" element={<CreateProduct />} />
-            </Route>
+            </Route> */}
             </Routes>
               </searchContext.Provider>
             </Totalcontext.Provider>

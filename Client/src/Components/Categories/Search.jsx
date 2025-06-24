@@ -9,9 +9,9 @@ const Search = () => {
   const{cartItems,setCartItems} = useContext(cartContext)
   useEffect(() => {
     // Fetch products from API
-    fetch("https://fakestoreapi.com/products")
+    fetch("http://localhost:5000/Product")
       .then((res) => res.json())
-      .then((data) => setProducts(data));
+      .then((data) => setProducts(data.product));
   }, []);
 
   useEffect(() => {
@@ -37,11 +37,11 @@ const Search = () => {
         {filtered.length > 0 ? (
           filtered.map((product) => (
           <div
-            key={product.id}
+            key={product._id}
             className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
           >
             <img
-              src={product.image}
+              src={`http://localhost:5000/uploads/${product.image}`}
               alt={product.title}
               className="h-48 w-full object-contain p-4 bg-white"
             />

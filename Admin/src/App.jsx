@@ -5,6 +5,7 @@ import Products from "./Components/Products/Products";
 import CreateProduct from "./Components/Products/CreateProduct";
 import DashboardHome from "./DashboardHome";
 import Homepage from "./Components/Homepage";
+import EditProduct from "./Components/Products/EditProduct";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="products" element={<Products />} />
             <Route path="products/create" element={<CreateProduct />} />
+            <Route path="products/edit/:id" element={<EditProduct />} />
           </Route>
         </Routes>
       </BrowserRouter>

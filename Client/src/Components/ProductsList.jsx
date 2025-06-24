@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { cartContext } from "../App";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductsList = () => {
   const [products, setProducts] = useState([]);
@@ -19,23 +19,24 @@ const ProductsList = () => {
   return (
     <div className="py-36 px-12 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-6">Products</h1>
+      
       <div className="grid grid-cols-4 gap-6">
         {products.map((product) => (
           <div
-            key={product.id}
+            key={product._id}
             className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-          >
+          ><Link to={`/ProductDetail/${product._id}`}>
             <img
-              src={product.image}
+              src={`http://localhost:5000/uploads/${product.image}`}
               alt={product.title}
               className="h-48 w-full object-contain p-4 bg-white"
-            />
+            /></Link>
             <div className="px-4 py-2">
               <h2 className="text-lg font-semibold mb-1 truncate">
                 {product.title}
               </h2>
               <p className="text-green-600 font-bold mb-2">
-                ₹{(product.price * 3).toFixed(0)}
+                ₹{(product.price).toFixed(0)}
               </p>
               <p className="text-sm text-gray-600 mb-4 line-clamp-2">
                 {product.description}
@@ -60,10 +61,10 @@ const ProductsList = () => {
               <div className="flex justify-between">
                 <button
                   onClick={() => handleAdd(product)}
-                  disabled={cartItems.some((item) => item.id === product.id)}
+                  disabled={cartItems.some((item) => item._id === product._id)}
                   className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded"
                 >
-                  {cartItems.some((item) => item.id === product.id)
+                  {cartItems.some((item) => item._id === product._id)
                     ? "In Cart"
                     : "Add to Cart"}
                 </button>

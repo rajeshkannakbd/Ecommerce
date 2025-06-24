@@ -1,13 +1,5 @@
 const mongoose = require("mongoose");
 
-const itemSchema = new mongoose.Schema({
-  title: String,
-  desc: String,
-  price: Number,
-  category: String,
-  rating: Number,
-});
-
 const UserSchema = new mongoose.Schema({
   name: String,
   email: String,
@@ -15,13 +7,23 @@ const UserSchema = new mongoose.Schema({
   role: String,
 });
 
-const productSchema = new mongoose.Schema({
+const itemSchema = new mongoose.Schema({
   title: String,
   desc: String,
   price: Number,
   category: String,
-  rating: Number,
+  rating: Array,
+  stock: String,
+  image: String,
 });
+
+// const productSchema = new mongoose.Schema({
+//   title: String,
+//   desc: String,
+//   price: Number,
+//   category: String,
+//   rating: Number,
+// });
 
 const OrderSchema = new mongoose.Schema({
   name: String,
@@ -35,6 +37,6 @@ const OrderSchema = new mongoose.Schema({
 
 const UserModel = mongoose.model("Users", UserSchema);
 const OrderModel = mongoose.model("Orders", OrderSchema);
-const productModel = mongoose.model("newProduct", productSchema);
-const itemModel = mongoose.model("items",itemSchema)
-module.exports = { UserModel, OrderModel, productModel,itemModel};
+// const productModel = mongoose.model("newProduct", productSchema);
+const itemModel = mongoose.model("items", itemSchema);
+module.exports = { UserModel, OrderModel, itemModel };
