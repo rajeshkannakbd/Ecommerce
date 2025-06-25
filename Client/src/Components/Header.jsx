@@ -8,7 +8,7 @@ const Header = () => {
     useContext(cartContext);
   const { search, setSearch } = useContext(searchContext);
   const navigate = useNavigate();
-  const isthere = userName.length; 
+  const isthere = userName?.length || 0; 
   // useEffect(() => navigate("/search"), [search]);
   return (
     <div className="header w-full z-20 flex justify-evenly p-4 items-center bg-white shadow-md fixed  top-10">
@@ -165,7 +165,7 @@ const Header = () => {
         <h2 className="cursor-pointer">
           <Link to="/">Home</Link>
         </h2>
-        <h2 className="cursor-pointer">What's New</h2>
+        <Link to="/latestProducts"><h2 className="cursor-pointer">What's New</h2></Link>
         <h2 className="cursor-pointer">Delivery</h2>
         {role === "admin" && (
           <h2 className="cursor-pointer">

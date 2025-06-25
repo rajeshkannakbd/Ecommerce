@@ -22,7 +22,7 @@ const ProductsDetailPage = () => {
     );
   }
   return (
-    <div className=" relative top-28 h-screen">
+    <div className=" relative top-28 h-auto">
       <div className=" flex m-10">
         <div className="">
           <div className=" border-2 border-slate-100 shadow-lg h-[500px] w-[600px] relative content-center items-center justify-center">
@@ -53,7 +53,7 @@ const ProductsDetailPage = () => {
             </button>
           </div>
         </div>
-        <div className=" mx-7 flex flex-col overflow-y-scroll w-[90%] gap-3">
+        <div className=" mx-7 flex flex-col overflow-y-scroll scrollbar-hide w-[90%] gap-3">
           <h2 className=" font-semibold text-2xl uppercase">
             {products.title}
           </h2>
@@ -97,7 +97,7 @@ const ProductsDetailPage = () => {
             <h2 className=" mt-5 mb-2 text-xl font-medium text-slate-800">
               About The Product
             </h2>
-            <h5 className=" font-light">{products.description}</h5>
+            <h5 className=" font-light">{products.desc}</h5>
           </div>
 
           <div className=" mt-6 flex flex-col gap-2">

@@ -1,27 +1,33 @@
-import React, { useContext, useEffect, useState } from "react";
-import { cartContext } from "../App";
-import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { cartContext } from '../../App';
 
-const ProductsList = () => {
+const NewProducts = () => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-  const { cartItems, setCartItems } = useContext(cartContext);
-  const navigate = useNavigate();
+  const {cartItems} = useContext(cartContext)
   useEffect(() => {
-    fetch("http://localhost:5000/Product")
-      .then((res) => res.json())
-      .then((data) => setProducts(data.product))
-      .catch((error) => console.error("Failed to fetch products:", error));
+    axios.get("http://localhost:5000/Product")
+      .then((response) => {
+        // Set the products to state
+        setProducts(response.data.product);
+        console.log(response.data.product);
+        
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
   }, []);
-  const handleAdd = (product) => {
-    setCartItems((prevItems) => [...prevItems, product]);
-  };
+
+  // Get the last two products
+  const newProducts = products.slice(-2);
+
   return (
-    <div className="py-36 px-12 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Products</h1>
+   <div className="py-36 px-12 bg-gray-100 min-h-screen">
+      <h1 className="text-3xl font-bold mb-6">Latest Products</h1>
       
       <div className="grid grid-cols-4 gap-6">
-        {products.map((product) => (
+        {newProducts.map((product) => (
           <div
             key={product._id}
             className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
@@ -83,4 +89,5 @@ const ProductsList = () => {
   );
 };
 
-export default ProductsList;
+export default NewProducts;
+

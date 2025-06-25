@@ -39,18 +39,16 @@ const Login = () => {
           setUserName(user.name);
           setRole(user.role);
           setIsAuthencate(true);
-          if (user.role === "admin") {
-            navigate("/admin/dashboard/products");
-          } else {
-            navigate("/cart");
-          }
+          navigate("/cart");
         }
       })
       .catch((err) => {
-        const msg = err.response?.data?.message || "Login failed";
-        console.error("Login error:", msg);
-        alert(msg);
-      });
+    if (err.response) {
+      alert(err.response.data.message); // Show meaningful error
+    } else {
+      alert("An unexpected error occurred");
+    }
+  });
   };
 
   return (

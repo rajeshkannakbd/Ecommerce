@@ -14,32 +14,35 @@ const Order = () => {
   let navigate = useNavigate();
   const handleOrder = async (e) => {
     e.preventDefault();
-    setShowErrors(true)
-  const orderData = {
-    name,
-    email,
-    mobileNumber,
-    address,
-    payment,
-    cartItems,
-    total
-  };
-  try {
-    const response = await axios.post("http://localhost:5000/order", orderData);
+    setShowErrors(true);
+    const orderData = {
+      name,
+      email,
+      mobileNumber,
+      address,
+      payment,
+      cartItems,
+      total,
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/order",
+        orderData
+      );
 
-    if (response.status === 201) {
-      window.alert("Order placed successfully!");
-      setCartItems([]);
-      navigate("/");
+      if (response.status === 201) {
+        window.alert("Order placed successfully!");
+        setCartItems([]);
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Order error:", error);
+      window.alert(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again."
+      );
     }
-  } catch (error) {
-    console.error("Order error:", error);
-    window.alert(
-      error.response?.data?.message || "Something went wrong. Please try again."
-    );
-  }
-};
-
+  };
 
   return (
     <>
@@ -48,13 +51,23 @@ const Order = () => {
           Place Your Order
         </h1>
         <div className="  border-2 border-slate-400 h-[100%] w-[55%] mx-[20%] my-8">
-          <form action="" className=" flex p-4 flex-col " onSubmit={handleOrder}>
+          <form
+            action=""
+            className=" flex p-4 flex-col "
+            onSubmit={handleOrder}
+          >
             <label htmlFor="name">Name : </label>
             <input
               type="text"
               id="name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Block input if it contains digits
+                if (/^[A-Za-z\s]*$/.test(value)) {
+                  setName(value);
+                }
+              }}
               className=" m-2   outline outline-1 "
             />
             {showErrors && !name && (
@@ -67,7 +80,14 @@ const Order = () => {
               type="text"
               id="mobile"
               value={mobileNumber}
-              onChange={(e) => setMobileNumber(e.target.value)}
+              maxLength={10}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Allow only numbers
+                if (/^[0-9]*$/.test(value)) {
+                  setMobileNumber(value);
+                }
+              }}
               className=" m-2   outline outline-1 "
             />
             {showErrors && !mobileNumber && (
@@ -136,11 +156,11 @@ const Order = () => {
               </span>
             )}
             <button
-            type="submit"
-            className=" bg-green-500 text-white font-semibold rounded-full p-2 relative w-48 left-[40%] my-4"
-          >
-            Place Order
-          </button>
+              type="submit"
+              className=" bg-green-500 text-white font-semibold rounded-full p-2 relative w-48 left-[40%] my-4"
+            >
+              Place Order
+            </button>
           </form>
         </div>
       </div>

@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { cartContext } from "../App";
 
 const Top = () => {
   const navigate = useNavigate();
-  
+  const {
+    setIsAuthencate,
+    setUserName,
+    setRole,
+    isAunthencate,
+    cartItems,
+    setCartItems,
+  } = useContext(cartContext);
+
+  const handleLogout = () => {
+    setIsAuthencate(false);
+    setCartItems([])
+    setUserName("");
+    setRole("");
+    navigate("/login");
+  };
 
   return (
     <div className=" h-10 z-30 w-full fixed  top-0 flex justify-evenly p-0 m-0 bg-green-900 text-white items-center">
@@ -35,7 +50,7 @@ const Top = () => {
         <select
           name=""
           id=""
-          className=" rounded-full m-2 outline-none  bg-transparent"
+          className=" rounded-full m-2 outline-none  bg-transparent "
         >
           <option value="Lan" className=" text-black">
             Lang
@@ -68,18 +83,29 @@ const Top = () => {
             Banglore
           </option>
         </select>
-        <button
-          className=" text-sm mx-4 text-green-700 bg-white font-medium outline-2 outline rounded-full px-2 py-1"
-          onClick={() => navigate("/signup")}
-        >
-          Sign up
-        </button>
-        <button
-          className=" text-sm mx-0 text-green-700 bg-white font-medium outline-2 outline rounded-full px-2 py-1"
-          onClick={() => navigate("/login")}
-        >
-          Login
-        </button>
+        {!isAunthencate ? (
+          <>
+            <button
+              className="text-sm mx-2 text-green-700 bg-white font-medium outline-2 outline rounded-full px-2 py-1"
+              onClick={() => navigate("/signup")}
+            >
+              Sign up
+            </button>
+            <button
+              className="text-sm mx-2 text-green-700 bg-white font-medium outline-2 outline rounded-full px-2 py-1"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </button>
+          </>
+        ) : (
+          <button
+            className="text-sm mx-2 text-white bg-green-600 font-medium outline-2 outline rounded-full px-3 py-1"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        )}
       </div>
     </div>
   );

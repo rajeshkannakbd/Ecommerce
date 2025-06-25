@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { cartContext } from '../../App';
+import { cartContext } from "../../App";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {userName,setUserName} =useContext(cartContext)
+  const { userName, setUserName } = useContext(cartContext);
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,27 +20,32 @@ const Register = () => {
       })
       .catch((err) => {
         console.error("Registration error:", err);
+        alert(err.response.data.message)
       });
   };
-
-  
 
   return (
     <div className="w-auto h-auto mt-40 flex items-center justify-center">
       <div className="bg-white p-6 rounded shadow-lg w-96">
-        <h1 className="text-2xl font-bold text-slate-800">Register</h1>
-        <form onSubmit={handleSubmit} autoComplete='off'>
+        <h1 className="text-2xl font-bold text-slate-800">Sign-Up</h1>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <div className="mb-4">
             <label htmlFor="name" className="block text-xl font-semibold">
               Name
             </label>
             <input
-            name="fakeName"
+              name="fakeName"
               id="name"
               type="text"
               value={name}
-              autoComplete='off'
-              onChange={(e) => setName(e.target.value)}
+              autoComplete="off"
+              onChange={(e) => {
+                const value = e.target.value;
+                // Block input if it contains digits
+                if (/^[A-Za-z\s]*$/.test(value)) {
+                  setName(value);
+                }
+              }}
               placeholder="Enter Name"
               className="w-full border-2 border-slate-300 p-2 mt-1"
             />
@@ -50,11 +55,11 @@ const Register = () => {
               Email
             </label>
             <input
-              name="fakeEmail" 
+              name="fakeEmail"
               id="email"
               type="email"
               value={email}
-              autoComplete='off'
+              autoComplete="off"
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter Email"
               className="w-full border-2 border-slate-300 p-2 mt-1"
@@ -65,11 +70,11 @@ const Register = () => {
               Password
             </label>
             <input
-              name="new-password" 
+              name="new-password"
               id="password"
               type="password"
               value={password}
-              autoComplete='off'
+              autoComplete="off"
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter Password"
               className="w-full border-2 border-slate-300 p-2 mt-1"
@@ -81,12 +86,13 @@ const Register = () => {
           >
             Register
           </button>
-          <Link to="/login" className=" hover:text-green-500">Already Have an Account?</Link>
+          <Link to="/login" className=" hover:text-green-500">
+            Already Have an Account?
+          </Link>
         </form>
-        
       </div>
     </div>
   );
 };
 
-export default Register
+export default Register;

@@ -1,11 +1,33 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-  role: String,
+  name: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        return isNaN(v); // Returns false if v is a number
+      },
+      message: "Username cannot be a number",
+    },
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    select: false,
+  },
+  password: {
+    type: String,
+    required: true,
+    select: false,
+  },
+  role: {
+    type: String,
+    default: "user",
+  },
 });
+
 
 const itemSchema = new mongoose.Schema({
   title: String,

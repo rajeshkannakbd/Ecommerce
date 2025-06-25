@@ -8,6 +8,18 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+      if (!name || !isNaN(name)) {
+      return res.status(400).json({ message: "Username cannot be a number" });
+    }
+
+   
+    if (!password || password.length < 8) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 8 characters" });
+    }
+
+
     const extinctUser = await UserModel.findOne({ email }).select("+password");
     if (extinctUser) {
       return res.status(409).json({ message: "User already exists" });
@@ -38,7 +50,7 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ email }).select("+password");
 
     if (!user) {
       console.log("No user found with email:", email);
@@ -245,6 +257,25 @@ exports.updateProduct = async (req, res) => {
       res.status(500).json({ message: "Server error while uploading product" });
     }
   };
+
+
+  exports.userDetails = async (req,res)=>{
+    const users = await UserModel.find({})
+      res.json({
+        message : "sucess",
+        users
+      })
+  }
+
+  exports.orderDetails = async (req,res)=>{
+    const orders = await OrderModel.find({})
+      res.json({
+        message : "sucess",
+        orders
+      })
+  }
+
+
 
 
 
