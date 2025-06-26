@@ -13,33 +13,24 @@ const EditProduct = () => {
     category: "",
     images: "",
     stock: "",
-    rating: {
-      rate: "",
-      count: "",
-    },
-  });
+    rating: "",
+    count: "",
+    });
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/Product/${id}`)
       .then((res) => {
         const product = res.data.product;
-        // For rating, assume product.rating[0]
-        const rating =
-          Array.isArray(product.rating) && product.rating[0]
-            ? product.rating[0]
-            : { rate: 0, count: 0 };
 
         setFormData({
           title: product.title || "",
-          desc: product.description || "",
+          desc: product.desc || "",
           price: product.price || "",
           category: product.category || "",
           images: product.image || "",
-          rating: {
-            rate: rating.rate,
-            count: rating.count,
-          },
+          rating: product.rating || "",
+          count : product.count || "",
         });
       })
       .catch((err) => {
@@ -49,38 +40,34 @@ const EditProduct = () => {
   }, [id]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (["rate", "count"].includes(name)) {
-      setFormData((prev) => ({
-        ...prev,
-        rating: { ...prev.rating, [name]: value },
-      }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
-  };
+  const { name, value } = e.target;
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const payload = {
-        ...formData,
-        rating: [
-          {
-            rate: parseFloat(formData.rating.rate),
-            count: parseInt(formData.rating.count),
-          },
-        ],
-      };
 
-      await axios.put(`http://localhost:5000/Product/${id}`, payload);
-      alert("Product updated successfully.");
-      navigate("/admin/dashboard/products");
-    } catch (error) {
-      console.error("Failed to update product:", error);
-      alert("Update failed.");
-    }
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const payload = {
+      ...formData,
+      price: Number(formData.price),
+      rating: Number(formData.rating),
+      count: Number(formData.count),
+    };
+
+    await axios.put(`http://localhost:5000/Product/${id}`, payload);
+
+    alert("Product updated successfully.");
+    navigate("/admin/dashboard/products");
+  } catch (error) {
+    console.error("Failed to update product:", error);
+    alert("Update failed.");
+  }
+};
+
 
 
   return (
@@ -130,9 +117,9 @@ const EditProduct = () => {
         />
         <label htmlFor="rate" className=" font-normal text-slate-500 text-lg -mb-3 ">Product Ratings : </label>
         <input
-          name="rate"
+          name="rating"
           type="number"
-          value={formData.rating.rate}
+          value={formData.rating}
           onChange={handleChange}
           placeholder="Rating"
           className="border p-2"
@@ -141,7 +128,7 @@ const EditProduct = () => {
         <input
           name="count"
           type="number"
-          value={formData.rating.count}
+          value={formData.count}
           onChange={handleChange}
           placeholder="Rating Count"
           className="border p-2"

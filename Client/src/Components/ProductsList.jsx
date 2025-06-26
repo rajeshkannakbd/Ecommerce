@@ -42,7 +42,7 @@ const ProductsList = () => {
                 {product.desc}
               </p>
               <div className=" flex">
-              <h1 className="text-sm text-gray-600 mb-4 line-clamp-2">Ratings : {} </h1>
+              <h1 className="text-sm text-gray-600 mb-4 line-clamp-2">Ratings : {product.rating} </h1>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

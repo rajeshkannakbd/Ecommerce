@@ -108,9 +108,9 @@ exports.singlePRoduct = async (req, res) => {
 /*__ADDING NEW ITEM ROUTE__*/
 
 exports.newitem = async (req, res) => {
-  const { title, desc, price, category, rating } = req.body;
+  const { title, desc, price, category, rating , count } = req.body;
 
-  if (!title || !desc || !price || !category) {
+  if (!title || !desc || !price || !category || !rating || !count) {
     return res.status(400).json({
       status: "error",
       message: "Give A Proper Details",
@@ -122,7 +122,8 @@ exports.newitem = async (req, res) => {
     desc,
     price,
     category,
-    rating: rating || 0,
+    rating,
+    count
   });
 
   try {
@@ -138,6 +139,7 @@ exports.newitem = async (req, res) => {
         price: savedItem.price,
         category: savedItem.category,
         rating: savedItem.rating,
+        count: savedItem
       },
     });
   } catch (err) {
@@ -232,7 +234,7 @@ exports.updateProduct = async (req, res) => {
 
   exports.uploadProductWithImage = async (req, res) => {
     try {
-      const { title, desc, price, category } = req.body;
+      const { title, desc, price, category ,rating,count } = req.body;
       const image = req.file?.filename;
       console.log("req.file", req.file);
 
@@ -247,7 +249,8 @@ exports.updateProduct = async (req, res) => {
         price,
         category,
         image: image,
-        rating: [],
+        rating,
+        count
       });
 
       const savedItem = await newItem.save();

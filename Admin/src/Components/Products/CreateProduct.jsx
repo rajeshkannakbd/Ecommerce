@@ -9,7 +9,7 @@ const CreateProduct = () => {
   const [category, setCategory] = useState("");
   const [rating, setRating] = useState("");
   const [file, setFile] = useState(null);
-  
+  const [count,setCount] = useState("")
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -17,7 +17,7 @@ const handleSubmit = async (e) => {
   console.log("File selected:", file);
 
 
-  if (!title || !desc || !price || !category || !file) {
+  if (!title || !desc || !price || !category || !file || !rating || !count) {
     alert("Please fill in all fields");
     return;
   }
@@ -29,6 +29,7 @@ const handleSubmit = async (e) => {
   formData.append("category", category);
   formData.append("rating", rating);
   formData.append("image", file);
+  formData.append("count",count)
 
   try {
     const response = await axios.post(
@@ -154,17 +155,43 @@ const handleSubmit = async (e) => {
               />
             </div>
           <div className="flex flex-col">
-            <label htmlFor="description" className="mb-2 font-medium">
-              Description:
+            <label htmlFor="Description" className="mb-2 font-medium">
+             Product Description:
             </label>
             <textarea
-              id="description"
+              id="Description"
               value={desc}
                onChange={(e) => setDesc(e.target.value)}
-              placeholder="Enter product description"
-              className="w-full h-32 border border-gray-300 rounded px-4 pt-6 placeholder:text-center placeholder:text-gray-400 text-left resize-none"
+              placeholder="Enter product Description"
+             className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
+           <div className="flex flex-col flex-1 min-w-[200px]">
+              <label htmlFor="productrating" className="mb-2 font-medium">
+                Product Rating:
+              </label>
+              <input
+                type="number"
+                value={rating}
+                id="productrating"
+                onChange={(e) => setRating(e.target.value)}
+                className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="Enter product Rating"
+              />
+            </div>
+          <div className="flex flex-col flex-1 min-w-[200px]">
+              <label htmlFor="productcount" className="mb-2 font-medium">
+                Product Availability:
+              </label>
+              <input
+                type="number"
+                value={count}
+                id="productcount"
+                onChange={(e) => setCount(e.target.value)}
+                className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="Enter product name"
+              />
+            </div>
           <h2 className=" font-medium">Product Image :</h2>
           <div className="flex justify-center">
             <label

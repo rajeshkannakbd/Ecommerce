@@ -60,7 +60,7 @@ const ProductsDetailPage = () => {
           <div className=" flex gap-4 items-center my-3">
             <div className=" bg-green-500 flex items-center p-1 w-[60px] justify-center rounded-lg ">
               <h2 className=" rounded-lg h-[20px] w-[10px] mr-1 font-semibold flex items-center justify-center ">
-                {/* {products.rating?.[0].rate?.toFixed(0)} */}3
+                {products.rating}
               </h2>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -104,13 +104,13 @@ const ProductsDetailPage = () => {
             <h2 className=" font-semibold text-lg text-slate-800">
               Ratings :
               <span className=" text-blue-500 font-bold m-2">
-                {/* {products.rating?.[0].rate?.toFixed(0)} */}3
+                {products.rating}
               </span>{" "}
             </h2>
             <h2 className=" font-semibold text-lg text-slate-800">
               Available :
               <span className=" text-blue-500 font-bold m-2 mr-1">
-                {/* {products.rating?.[0].count?.toFixed(0)} */}3
+                {products.count}
               </span>
               pcs
             </h2>
