@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ecommerce-backend
+    env: node
+    branch: main
+    repo: https://github.com/rajeshkannakbd/Ecommerce
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
