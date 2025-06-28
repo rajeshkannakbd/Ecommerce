@@ -1,6 +1,8 @@
 const { OrderModel, productModel, itemModel } = require("../Models/User");
 const { UserModel } = require("../Models/User");
 const bcrypt = require("bcrypt");
+const razorpay = require("../Config/Razorpay");
+const crypto = require("crypto");
 
 /*__REGISTER ROUTE__*/
 
@@ -8,17 +10,15 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-      if (!name || !isNaN(name)) {
+    if (!name || !isNaN(name)) {
       return res.status(400).json({ message: "Username cannot be a number" });
     }
 
-   
     if (!password || password.length < 8) {
       return res
         .status(400)
         .json({ message: "Password must be at least 8 characters" });
     }
-
 
     const extinctUser = await UserModel.findOne({ email }).select("+password");
     if (extinctUser) {
@@ -108,7 +108,7 @@ exports.singlePRoduct = async (req, res) => {
 /*__ADDING NEW ITEM ROUTE__*/
 
 exports.newitem = async (req, res) => {
-  const { title, desc, price, category, rating , count } = req.body;
+  const { title, desc, price, category, rating, count } = req.body;
 
   if (!title || !desc || !price || !category || !rating || !count) {
     return res.status(400).json({
@@ -123,7 +123,7 @@ exports.newitem = async (req, res) => {
     price,
     category,
     rating,
-    count
+    count,
   });
 
   try {
@@ -139,7 +139,7 @@ exports.newitem = async (req, res) => {
         price: savedItem.price,
         category: savedItem.category,
         rating: savedItem.rating,
-        count: savedItem
+        count: savedItem,
       },
     });
   } catch (err) {
@@ -150,7 +150,6 @@ exports.newitem = async (req, res) => {
     });
   }
 };
-
 
 /*__DELETE ITEM ROUTE ROUTE__*/
 
@@ -224,7 +223,9 @@ exports.updateProduct = async (req, res) => {
   const updatedData = req.body;
 
   try {
-    const product = await itemModel.findByIdAndUpdate(id, updatedData, { new: true });
+    const product = await itemModel.findByIdAndUpdate(id, updatedData, {
+      new: true,
+    });
     if (!product) return res.status(404).json({ message: "Product not found" });
     res.json({ message: "Product updated successfully", product });
   } catch (error) {
@@ -232,54 +233,165 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
-  exports.uploadProductWithImage = async (req, res) => {
-    try {
-      const { title, desc, price, category ,rating,count } = req.body;
-      const image = req.file?.filename;
-      console.log("req.file", req.file);
+exports.uploadProductWithImage = async (req, res) => {
+  try {
+    const { title, desc, price, category, rating, count } = req.body;
+    const image = req.file?.filename;
+    console.log("req.file", req.file);
 
-
-      if (!title || !desc || !price || !category || !image) {
-        return res.status(400).json({ message: "All fields including image are required" });
-      }
-
-      const newItem = new itemModel({
-        title,
-        desc,
-        price,
-        category,
-        image: image,
-        rating,
-        count
-      });
-
-      const savedItem = await newItem.save();
-      res.status(201).json({ message: "Product created", item: savedItem });
-    } catch (err) {
-      console.error("Upload failed:", err);
-      res.status(500).json({ message: "Server error while uploading product" });
+    if (!title || !desc || !price || !category || !image) {
+      return res
+        .status(400)
+        .json({ message: "All fields including image are required" });
     }
+
+    const newItem = new itemModel({
+      title,
+      desc,
+      price,
+      category,
+      image: image,
+      rating,
+      count,
+    });
+
+    const savedItem = await newItem.save();
+    res.status(201).json({ message: "Product created", item: savedItem });
+  } catch (err) {
+    console.error("Upload failed:", err);
+    res.status(500).json({ message: "Server error while uploading product" });
+  }
+};
+
+exports.userDetails = async (req, res) => {
+  const users = await UserModel.find({});
+  res.json({
+    message: "sucess",
+    users,
+  });
+};
+
+exports.orderDetails = async (req, res) => {
+  try {
+    const orders = await OrderModel.find({});
+    res.json({ message: "success", orders });
+  } catch (err) {
+    console.error("Error fetching order details:", err);
+    res.status(500).json({ message: "Server error while fetching orders" });
+  }
+};
+
+//payment integration
+
+// const Razorpay = require("razorpay");
+// const crypto = require("crypto");
+
+// const razorpay = new Razorpay({
+//   key_id: process.env.RAZORPAY_KEY_ID,
+//   key_secret: process.env.RAZORPAY_KEY_SECRET,
+// });
+
+exports.createPayment = async (req, res) => {
+  const { total } = req.body;
+
+  if (!total || isNaN(total)) {
+    console.log("==> [createPayment] Invalid total:", total);
+    return res
+      .status(400)
+      .json({ success: false, message: "Invalid total amount" });
+  }
+
+  const options = {
+    amount: Math.round(total * 100), // ₹249 becomes 24900 paise
+    currency: "INR",
+    receipt: `receipt_order_${Date.now()}`,
   };
 
+  try {
+    const order = await razorpay.orders.create(options);
+    console.log("==> Razorpay order created:", order);
+    res.status(200).json({
+      success: true,
+      order,
+      key: process.env.RAZORPAY_KEY_ID,
+    });
+  } catch (error) {
+    console.error("==> Razorpay Order Error:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Payment initiation failed" });
+  }
+};
 
-  exports.userDetails = async (req,res)=>{
-    const users = await UserModel.find({})
-      res.json({
-        message : "sucess",
-        users
-      })
+const sendOrderEmail = require("../utils/Mailer");
+
+exports.verifyPayment = async (req, res) => {
+  const {
+    razorpay_order_id,
+    razorpay_payment_id,
+    razorpay_signature,
+    orderDetails,
+  } = req.body;
+
+  const sign = razorpay_order_id + "|" + razorpay_payment_id;
+  const expectedSignature = crypto
+    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+    .update(sign.toString())
+    .digest("hex");
+
+  if (!orderDetails) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Missing order details" });
   }
 
-  exports.orderDetails = async (req,res)=>{
-    const orders = await OrderModel.find({})
-      res.json({
-        message : "sucess",
-        orders
-      })
+  if (expectedSignature === razorpay_signature) {
+    const { name, email, mobileNumber, address, payment, cartItems, total } =
+      orderDetails;
+
+    try {
+      const newOrder = new OrderModel({
+        name,
+        email,
+        mobileNumber,
+        address,
+        payment,
+        cart: cartItems,
+        total,
+      });
+
+      await newOrder.save();
+
+      // ✅ Send email without route
+      const emailBody = `
+        <h2>Hi ${name},</h2>
+        <p>🎉 Your order has been placed successfully!</p>
+        <p><strong>Order ID:</strong> ${newOrder._id}</p>
+        <p><strong>Total:</strong> ₹${total}</p>
+        <p>📦 We’ll notify you when it ships.</p>
+        <br>
+        <p>Thanks for shopping with us!</p>
+      `;
+
+      await sendOrderEmail(email, "Order Confirmation", emailBody);
+
+      return res.status(200).json({
+        success: true,
+        message: "Payment verified, order stored, and email sent",
+      });
+    } catch (err) {
+      console.error("Error Saving Order or Sending Email:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Order saved but email sending failed",
+      });
+    }
+  } else {
+    return res
+      .status(400)
+      .json({ success: false, message: "Payment verification failed" });
   }
-
-
-
+};
 
 
 /*__PRODUCT LISTING ROUTE USING FAKESTOREAPI__*/

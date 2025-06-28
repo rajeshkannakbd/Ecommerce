@@ -8,22 +8,21 @@ import Homepage from "./Components/Homepage";
 import EditProduct from "./Components/Products/EditProduct";
 import UserDetail from "./Components/Users/UserDetail";
 import OrderDetails from "./Components/Orders/orderDetails";
+import HomepageDetails from "./HomepageDetails";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          
-          <Route path="/admin/dashboard" element={<DasboardLayout />}>
-            <Route index element={<Dashboard />} />
+          <Route path="/" element={<Homepage />} >
+          <Route index element={<HomepageDetails />} />
             <Route path="products" element={<Products />} />
+            <Route path="home" element={<HomepageDetails/>} />
             <Route path="userdetail" element={<UserDetail/>} />
             <Route path="orderdetail" element={<OrderDetails/>} />
             <Route path="products/create" element={<CreateProduct />} />
-            <Route path="products/edit/:id" element={<EditProduct />} />
-          </Route>
+            <Route path="products/edit/:id" element={<EditProduct />} /></Route>
         </Routes>
       </BrowserRouter>
     </>

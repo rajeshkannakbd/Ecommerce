@@ -1,36 +1,38 @@
-import React, { useContext } from "react";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { cartContext } from "../../App";
+
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { userName, setUserName } = useContext(cartContext);
+  const { setUserName } = useContext(cartContext);
   const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
       .post("http://localhost:5000/register", { name, email, password })
-      .then((result) => {
-        console.log("Registration successful:", result);
+      .then(() => {
         navigate("/login");
       })
       .catch((err) => {
         console.error("Registration error:", err);
-        alert(err.response.data.message)
+        alert(err.response?.data?.message || "Registration failed");
       });
   };
 
   return (
-    <div className="w-auto h-auto mt-40 flex items-center justify-center">
-      <div className="bg-white p-6 rounded shadow-lg w-96">
-        <h1 className="text-2xl font-bold text-slate-800">Sign-Up</h1>
+    <div className="flex items-center justify-center -mt-14 min-h-screen px-4 bg-gray-50">
+      <div className="bg-white shadow-lg rounded-lg w-full max-w-md p-6 sm:p-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-6 text-center">
+          Sign Up
+        </h1>
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="mb-4">
-            <label htmlFor="name" className="block text-xl font-semibold">
+            <label htmlFor="name" className="block text-base font-medium">
               Name
             </label>
             <input
@@ -41,17 +43,17 @@ const Register = () => {
               autoComplete="off"
               onChange={(e) => {
                 const value = e.target.value;
-                // Block input if it contains digits
                 if (/^[A-Za-z\s]*$/.test(value)) {
                   setName(value);
                 }
               }}
               placeholder="Enter Name"
-              className="w-full border-2 border-slate-300 p-2 mt-1"
+              className="w-full border border-slate-300 p-2 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-xl font-semibold">
+            <label htmlFor="email" className="block text-base font-medium">
               Email
             </label>
             <input
@@ -62,11 +64,12 @@ const Register = () => {
               autoComplete="off"
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter Email"
-              className="w-full border-2 border-slate-300 p-2 mt-1"
+              className="w-full border border-slate-300 p-2 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-xl font-semibold">
+          <div className="mb-6">
+            <label htmlFor="password" className="block text-base font-medium">
               Password
             </label>
             <input
@@ -77,19 +80,23 @@ const Register = () => {
               autoComplete="off"
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter Password"
-              className="w-full border-2 border-slate-300 p-2 mt-1"
+              className="w-full border border-slate-300 p-2 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
             />
           </div>
           <button
             type="submit"
-            className="w-full  bg-green-600 text-white py-2 mt-3 rounded"
+            className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded font-semibold transition duration-200"
           >
             Register
           </button>
-          <Link to="/login" className=" hover:text-green-500">
-            Already Have an Account?
-          </Link>
         </form>
+        <div className="mt-4 text-center text-sm">
+          <span className="text-gray-600">Already have an account? </span>
+          <Link to="/login" className="text-green-600 hover:underline">
+            Login here
+          </Link>
+        </div>
       </div>
     </div>
   );

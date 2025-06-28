@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect, createContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { cartContext, Totalcontext } from "../../App";
 import { Link, useNavigate } from "react-router-dom";
 
-
 const Cart = () => {
   const { cartItems, setCartItems } = useContext(cartContext);
-  const{total,setTotal}=useContext(Totalcontext)
+  const { total, setTotal } = useContext(Totalcontext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const updated = cartItems.map((item) =>
@@ -16,14 +16,14 @@ const Cart = () => {
 
   const addQuantity = (id) => {
     const updated = cartItems.map((item) =>
-      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      item._id === id ? { ...item, quantity: item.quantity + 1 } : item
     );
     setCartItems(updated);
   };
 
   const subQuantity = (id) => {
     const updateds = cartItems.map((item) =>
-      item.id === id ? { ...item, quantity: item.quantity - 1 || 1 } : item
+      item._id === id ? { ...item, quantity: item.quantity - 1 || 1 } : item
     );
     setCartItems(updateds);
   };
@@ -35,64 +35,63 @@ const Cart = () => {
     );
     setTotal(newTotal.toFixed(2));
   }, [cartItems]);
-  const navigate =useNavigate()
 
   if (cartItems.length === 0) {
     return (
-      <div className="relative top-32 mx-4 ">
+      <div className="relative top-12 mx-4 mb-96 pb-32">
         <h1 className="text-2xl font-bold mb-4">Cart Items</h1>
-        <div className=" mx-[50%] text-nowrap">
-          <h2 className=" mb-4">your cart is empty</h2>
-          <div className=" bg-green-300 h-[50px] flex items-center content-center rounded-full text-nowrap w-[100px]">
-            <Link to={"/products"} className="mx-3">
-              Shop Now
-            </Link>
-          </div>
+        <div className="mx-auto text-center mt-8">
+          <h2 className="mb-4 text-lg">Your cart is empty</h2>
+          <Link
+            to="/products"
+            className="inline-block bg-green-500 hover:bg-green-600 transition px-6 py-2 rounded-full text-white font-medium"
+          >
+            Shop Now
+          </Link>
         </div>
       </div>
     );
   }
+
   return (
-    <Totalcontext.Provider value={{total}}>
-    <div className="relative top-32 pb-32">
-      <div className=" mx-4">
-        <h1 className="text-2xl font-bold mb-4">Cart Items</h1>
-        <div className="grid grid-cols-1 px-32   gap-6">
+    <Totalcontext.Provider value={{ total }}>
+      <div className="relative top-12 pb-32 px-4  max-w-screen">
+        <h1 className="text-2xl font-bold mb-6">Cart Items</h1>
+
+        <div className="flex flex-col gap-6">
           {cartItems.map((product) => (
             <div
               key={product._id}
-              className="card flex flex-row items-center gap-6 border-2 border-black p-6 rounded shadow bg-white"
+              className="flex flex-col md:flex-row items-center gap-6 border border-gray-300 p-4 rounded-lg shadow bg-white"
             >
               <img
                 src={`http://localhost:5000/uploads/${product.image}`}
                 alt="product"
-                className="h-[300px] w-[300px] p-2 object-contain"
+                className="w-full md:w-48 h-[300px] object-contain"
               />
-              <div className="flex flex-col justify-between flex-grow">
-                <h2 className="font-semibold text-lg mb-2">{product.title}</h2>
-                <h2 className="font-normal text-lg p-3 mb-2">{product.description}</h2>
-                {/* <div className=" flex flex-row m-0">
-                <h2 className="font-normal text-lg p-3 mb-2">Ratings: <span className=" font-medium text-green-700">{product.rating.rate}</span></h2>
-                <h2 className="font-normal text-lg p-3 mb-2">Stocks: <span className=" font-medium text-green-700">{product.rating.count}</span></h2>
-                </div> */}
-                <h4 className="text-green-700 font-bold text-xl mb-4">
+
+              <div className="flex flex-col gap-2 w-full">
+                <h2 className="text-lg font-semibold">{product.title}</h2>
+                <p className="text-gray-600 text-sm">{product.description}</p>
+                <h4 className="text-green-700 font-bold text-xl">
                   ₹{Number(product.price).toLocaleString("en-IN")}
                 </h4>
-                <div className="flex items-center gap-4">
+
+                <div className="flex flex-wrap items-center gap-4 mt-2">
                   <span className="text-base font-medium">Quantity:</span>
                   <button
-                    className="rounded-full w-10 h-10 flex items-center justify-center bg-slate-200"
-                    onClick={() => addQuantity(product.id)}
+                    className="rounded-full w-10 h-10 flex items-center justify-center bg-slate-200 text-xl"
+                    onClick={() => addQuantity(product._id)}
                   >
                     +
                   </button>
-                  <span className="border-2 px-4 py-1 text-center text-lg w-16">
+                  <span className="border px-4 py-1 text-lg w-16 text-center">
                     {product.quantity}
                   </span>
                   <button
                     disabled={product.quantity <= 1}
-                    className="rounded-full w-10 h-10 flex items-center justify-center bg-slate-200 disabled:bg-slate-100"
-                    onClick={() => subQuantity(product.id)}
+                    className="rounded-full w-10 h-10 flex items-center justify-center bg-slate-200 disabled:bg-slate-100 text-xl"
+                    onClick={() => subQuantity(product._id)}
                   >
                     -
                   </button>
@@ -101,20 +100,22 @@ const Cart = () => {
             </div>
           ))}
         </div>
+
+        {/* Total + Button */}
+        <div className="mt-16 mb-20  bg-yellow-100 rounded-xl px-6 py-4 text-center mx-auto w-full max-w-md">
+          <h2 className="text-lg sm:text-xl font-semibold mb-3">
+            Your Total: ₹{total}
+          </h2>
+          <button
+            onClick={() => navigate("/order")}
+            className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full font-medium"
+          >
+            Place Order
+          </button>
+        </div>
       </div>
-      <div className="fixed items-center content-center bottom-0 bg-yellow-100 w-[100%]">
-        <h2 className=" relative m-2 left-[40%] font-semibold">
-          Your Totat is : Rs.{total}
-        </h2>
-        <button onClick={()=>{navigate("/order")}}className=" rounded-full bg-green-500 m-3 px-4 p-2 relative left-[43%]">
-          Place Order
-        </button>
-      </div>
-    </div>
     </Totalcontext.Provider>
   );
 };
 
 export default Cart;
-
-

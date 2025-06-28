@@ -1,38 +1,19 @@
-import React, { useContext } from "react";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { cartContext } from "../../App";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { isAunthencate, setIsAuthencate, setUserName, role, setRole } =
     useContext(cartContext);
   const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     axios
       .post("http://localhost:5000/login", { email, password })
-      // .then((result) => {
-      //   console.log("Registration successful:", result);
-      //   const user = result.data?.user;
-      //   if (result.status === 200) {
-      //     // const user = result?.data?.user;
-      //     // if (user && user.name) {
-      //     //   setUserName(user.name);
-      //     // } else {
-      //     //   console.error("User object is missing:");
-      //     // }
-      //     // //
-      //     setUserName(user.name);
-      //     setIsAuthencate(true);
-      //     navigate("/");
-      //   }
-      // })
-      // .catch((err) => {
-      //   console.error("Registration error:", err);
-      // });
       .then((result) => {
         const user = result.data?.user;
         if (user && user.name) {
@@ -43,21 +24,23 @@ const Login = () => {
         }
       })
       .catch((err) => {
-    if (err.response) {
-      alert(err.response.data.message); // Show meaningful error
-    } else {
-      alert("An unexpected error occurred");
-    }
-  });
+        if (err.response) {
+          alert(err.response.data.message);
+        } else {
+          alert("An unexpected error occurred");
+        }
+      });
   };
 
   return (
-    <div className=" mt-40 flex items-center justify-center">
-      <div className="bg-white p-6 rounded shadow-lg w-96">
-        <h1 className="text-2xl font-bold text-slate-800">Login</h1>
+    <div className="flex items-center justify-center px-4 py-12 -mt-14 min-h-screen bg-gray-50">
+      <div className="bg-white shadow-lg rounded-lg w-full max-w-md p-6 sm:p-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-6 text-center">
+          Login
+        </h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-xl font-semibold">
+            <label htmlFor="email" className="block text-base font-medium">
               Email
             </label>
             <input
@@ -66,11 +49,12 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter Email"
-              className="w-full border-2 border-slate-300 p-2 mt-1"
+              className="w-full border border-slate-300 p-2 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-xl font-semibold">
+          <div className="mb-6">
+            <label htmlFor="password" className="block text-base font-medium">
               Password
             </label>
             <input
@@ -79,19 +63,23 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter Password"
-              className="w-full border-2 border-slate-300 p-2 mt-1"
+              className="w-full border border-slate-300 p-2 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-2 mt-4 rounded"
+            className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded font-semibold transition duration-200"
           >
             Login
           </button>
         </form>
-        <Link to="/signup" className=" hover:text-green-500">
-          Create a new account?
-        </Link>
+        <div className="mt-4 text-center text-sm">
+          <span className="text-gray-600">Don't have an account? </span>
+          <Link to="/signup" className="text-green-600 hover:underline">
+            Sign up here
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const OrderDetails = () => {
     console.log(orders);
     
   return (
-     <div className=' grid grid-cols-2 gap-2 mx-18 px-4' >
+     <div className=' grid grid-cols-2 gap-2 w-full mx-18 px-4' >
       
      {
       orders.map((order,index)=>(

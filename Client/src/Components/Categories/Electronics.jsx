@@ -1,33 +1,49 @@
 import React, { useContext, useEffect, useState } from "react";
 import { cartContext } from "../../App";
 
-
 const Electronics = () => {
   const [products, setProducts] = useState([]);
-  let [Electronics, setElectronics] = useState([]);
-  const{cartItems,setCartItems}= useContext(cartContext)
+  const [Electronics, setElectronics] = useState([]);
+  const { cartItems, setCartItems } = useContext(cartContext);
+
   useEffect(() => {
     fetch("http://localhost:5000/Product")
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data.product)
-        const men = data.product.filter(
+        setProducts(data.product);
+        const filtered = data.product.filter(
           (product) => product.category === "electronics"
         );
-        setElectronics(men);
+        setElectronics(filtered);
       })
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
-     const handleAdd = (product) => {
-  setCartItems(prevItems => [...prevItems, product]);
-};
- const cartIn = (id)=>{
-  return cartItems.some((item)=>item.id === id)
- }
+
+  const handleAdd = (product) => {
+    setCartItems((prevItems) => [...prevItems, product]);
+  };
+
+  const cartIn = (id) => {
+    return cartItems.some((item) => item.id === id);
+  };
+
+  if (Electronics.length === 0) {
+    return (
+      <div className="relative top-12 mx-4 mb-96 pb-32">
+        <h1 className="text-2xl font-bold mb-4">Electronics Items</h1>
+        <div className="mx-auto text-center mt-8">
+          <h2 className="mb-4 text-lg">Currently Unavailable !!</h2>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="py-36 px-12 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">Electronics</h1>
-      <div className="grid grid-cols-4 gap-6">
+    <div className="py-14 px-4 sm:px-6 lg:px-12 bg-gray-100 min-h-screen">
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-center sm:text-left">
+        Electronics
+      </h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {Electronics.map((product) => (
           <div
             key={product.id}
@@ -36,10 +52,10 @@ const Electronics = () => {
             <img
               src={`http://localhost:5000/uploads/${product.image}`}
               alt={product.title}
-              className="h-48 w-full object-contain p-4 bg-white"
+              className="h-48 sm:h-52 md:h-56 w-full object-contain p-4 bg-white"
             />
             <div className="px-4 py-2">
-              <h2 className="text-lg font-semibold mb-1 truncate">
+              <h2 className="text-base md:text-lg font-semibold mb-1 truncate">
                 {product.title}
               </h2>
               <p className="text-green-600 font-bold mb-2">
@@ -48,15 +64,19 @@ const Electronics = () => {
               <p className="text-sm text-gray-600 mb-4 line-clamp-2">
                 {product.description}
               </p>
-              <div className="flex justify-between">
+              <div className="flex flex-col sm:flex-row gap-2 justify-between">
                 <button
-                  onClick={()=>{handleAdd(product)}}
+                  onClick={() => handleAdd(product)}
                   disabled={cartIn(product.id)}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded"
+                  className={`${
+                    cartIn(product.id)
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-yellow-500 hover:bg-yellow-600"
+                  } text-white text-sm px-3 py-2 rounded transition`}
                 >
-                  {cartIn(product.id)?"Added To Cart ":"Add To Cart"}
+                  {cartIn(product.id) ? "Added To Cart" : "Add To Cart"}
                 </button>
-                <button className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded">
+                <button className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 rounded transition">
                   Buy Now
                 </button>
               </div>

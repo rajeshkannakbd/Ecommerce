@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { register, login, order, product, newitem, deleteitem, singlePRoduct, getProductById, updateProduct, uploadProductWithImage, userDetails, orderDetails } = require("../Controllers/Authcontroller");
+const { register, login, order, product, newitem, deleteitem, singlePRoduct, getProductById, updateProduct, uploadProductWithImage, userDetails, orderDetails, createPayment, verifyPayment } = require("../Controllers/Authcontroller");
 const upload = require("../Middleware/Multer");
 
 router.post("/register", register);
@@ -15,6 +15,9 @@ router.put("/Product/:id",updateProduct)
 router.post("/upload-product", upload.single("image"), uploadProductWithImage);
 router.get("/users",userDetails)
 router.get("/orderDetails",orderDetails)
+router.post("/create-payment", createPayment);
+router.post("/verify-payment", verifyPayment);
+
 
 
 module.exports = router;

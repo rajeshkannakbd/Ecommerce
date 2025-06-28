@@ -1,36 +1,52 @@
 import React, { useContext, useEffect, useState } from "react";
 import { cartContext } from "../../App";
 
-
 const Jewelery = () => {
   const [products, setProducts] = useState([]);
-  let [Jewelery, setJewelery] = useState([]);
-  const{cartItems,setCartItems} = useContext(cartContext)
+  const [Jewelery, setJewelery] = useState([]);
+  const { cartItems, setCartItems } = useContext(cartContext);
+
   useEffect(() => {
     fetch("http://localhost:5000/Product")
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data);
-
-        const men = data.filter((product) => product.category === "jewelery");
-        setJewelery(men);
+        setProducts(data.product);
+        const filtered = data.product.filter(
+          (product) => product.category === "jewelery"
+        );
+        setJewelery(filtered);
       })
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
-    const handleAdd = (product) => {
-  setCartItems(prevItems => [...prevItems, product]);
-};
-const isInCart = (id)=>{
-  return cartItems.some((item)=>item.id === id)
-}
- 
+
+  const handleAdd = (product) => {
+    setCartItems((prevItems) => [...prevItems, product]);
+  };
+
+  const isInCart = (id) => {
+    return cartItems.some((item) => item.id === id);
+  };
+
+  if (Jewelery.length === 0) {
+    return (
+      <div className="relative top-12 mx-4 mb-96 pb-32">
+        <h1 className="text-2xl font-bold mb-4">Jewelery Items</h1>
+        <div className="mx-auto text-center mt-8">
+          <h2 className="mb-4 text-lg">Currently Unavailable !!</h2>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="py-36 px-12 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">Jewelery</h1>
-      <div className="grid grid-cols-4 gap-6">
+    <div className="py-14 px-4 sm:px-6 md:px-12 bg-gray-100 min-h-screen">
+      <h1 className="text-xl sm:text-2xl font-bold mb-6 text-center sm:text-left">
+        Jewelery
+      </h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {Jewelery.map((product) => (
           <div
-            key={product.id}
+            key={product._id}
             className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
           >
             <img
@@ -39,7 +55,7 @@ const isInCart = (id)=>{
               className="h-48 w-full object-contain p-4 bg-white"
             />
             <div className="px-4 py-2">
-              <h2 className="text-lg font-semibold mb-1 truncate">
+              <h2 className="text-base font-semibold mb-1 truncate">
                 {product.title}
               </h2>
               <p className="text-green-600 font-bold mb-2">
@@ -48,13 +64,13 @@ const isInCart = (id)=>{
               <p className="text-sm text-gray-600 mb-4 line-clamp-2">
                 {product.description}
               </p>
-              <div className="flex justify-between">
+              <div className="flex flex-col sm:flex-row sm:justify-between gap-2">
                 <button
-                  onClick={()=>handleAdd(product)}
-                    disabled={isInCart(product.id)}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded"
+                  onClick={() => handleAdd(product)}
+                  disabled={isInCart(product.id)}
+                  className="bg-yellow-500 disabled:bg-yellow-600 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded"
                 >
-                    {isInCart(product.id) ? "Added To Cart" : "Add To Cart"}
+                  {isInCart(product.id) ? "Added To Cart" : "Add To Cart"}
                 </button>
                 <button className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded">
                   Buy Now

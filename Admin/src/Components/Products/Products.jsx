@@ -30,7 +30,7 @@ const Products = () => {
   };
 
   return (
-    <div className=" h-auto w-auto">
+    <div className=" h-full w-full">
       <div className=" sticky top-0 p-1 shadow-lg bg-white">
       <div className=" flex flex-row mx-10 mt-6 mb-8 ">
         <ul className=" flex justify-evenly gap-10">

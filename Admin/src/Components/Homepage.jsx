@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, Outlet } from "react-router-dom";
+import axios from "axios"
 
 const Homepage = () => {
 
   return (
-    <div>
+    <>
+    <div className=" flex w-full h-screen">
       
       <div className=" sidebar bg-slate-700 text-white w-[200px] h-screen">
         <div className=" list-none flex gap-6 flex-col mx-6 ">
@@ -29,7 +32,7 @@ const Homepage = () => {
           </div>
             <div className=" flex items-center content-center flex-row">
               <li className=" p-4 text-xl font-semibold ">
-                <Link to="/admin/dashboard/products">Products</Link>
+                <Link to="/products">Products</Link>
               </li>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +50,7 @@ const Homepage = () => {
               </svg>
             </div>
           <div className=" flex items-center content-center flex-row">
-            <Link to="/admin/dashboard/userdetail"><li className=" p-4 text-xl font-semibold ">Users</li></Link>
+            <Link to="/userdetail"><li className=" p-4 text-xl font-semibold ">Users</li></Link>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -64,7 +67,7 @@ const Homepage = () => {
             </svg>
           </div>
           <div className=" flex items-center content-center flex-row">
-           <Link to="/admin/dashboard/orderdetail"> <li className=" p-4 text-xl font-semibold ">Orders</li></Link>
+           <Link to="/orderdetail"> <li className=" p-4 text-xl font-semibold ">Orders</li></Link>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -100,7 +103,11 @@ const Homepage = () => {
           
         </div>
       </div>
+       <div className="flex-1 overflow-y-auto p-4 bg-gray-100">
+        <Outlet />
+      </div>
     </div>
+    </>
   );
 };
 
