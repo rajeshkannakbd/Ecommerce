@@ -8,7 +8,9 @@ const UserDetail = () => {
   const [users,setUsers] = useState([])
   useEffect(()=>{
     axios.get("http://localhost:5000/users")
-    .then((data)=>setUsers(data.data.users))
+    .then((data)=>{setUsers(data.data.users);
+    console.log(data.data.users)}
+    )
     .catch((err)=>console.log("Error while getting Users",err)
     )
   },[])

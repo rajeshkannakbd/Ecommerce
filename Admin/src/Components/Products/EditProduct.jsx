@@ -19,7 +19,7 @@ const EditProduct = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/Product/${id}`)
+      .get(`https://ecommerce-sjhs.onrender.com/Product/${id}`)
       .then((res) => {
         const product = res.data.product;
 
@@ -61,7 +61,7 @@ const handleSubmit = async (e) => {
     await axios.put(`http://localhost:5000/Product/${id}`, payload);
 
     alert("Product updated successfully.");
-    navigate("/admin/dashboard/products");
+    navigate("/products");
   } catch (error) {
     console.error("Failed to update product:", error);
     alert("Update failed.");

@@ -8,7 +8,7 @@ const Products = () => {
   const [activeItem, setActiveItem] = useState("all");
   
   useEffect(() => {
-    fetch("http://localhost:5000/Product")
+    fetch("https://ecommerce-sjhs.onrender.com/Product")
       .then((res) => res.json())
       .then((data) => setProducts(data.product))
       .catch((error) => console.error("Failed to fetch products:", error));
@@ -20,7 +20,7 @@ const Products = () => {
     
 
     try {
-      await axios.delete(`http://localhost:5000/deleteitem/${id}`);
+      await axios.delete(`https://ecommerce-sjhs.onrender.com/deleteitem/${id}`);
       setProducts(products.filter((product) => product._id !== id));
       alert("Product deleted successfully.");
     } catch (error) {
@@ -53,7 +53,7 @@ const Products = () => {
           </div>
           <div className=" flex items-center content-center flex-row border-2 p-3">
             <li className=" py-2 text-nowrap">
-              <Link to="/admin/dashboard/products/create">Create</Link>
+              <Link to="/products/create">Create</Link>
             </li>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +85,7 @@ const Products = () => {
             <td>{product.price}</td>
              
               <td className=" mr-10 flex gap-4"><button> <Link
-                        to={`/admin/dashboard/products/edit/${product._id}`}
+                        to={`/products/edit/${product._id}`}
                         className="text-blue-600 underline"
                       >
                         <svg

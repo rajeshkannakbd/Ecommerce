@@ -62,7 +62,7 @@ const handleSubmit = async (e) => {
       <div className=" flex flex-row mx-10 mt-6 mb-8 ">
         <ul className=" flex justify-evenly gap-10">
           <div className=" flex items-center content-center flex-row border-2 p-3 active:bg-slate-600">
-            <Link to="/admin/dashboard/products">
+            <Link to="/products">
               <li className=" text-nowrap">All Products </li>
             </Link>
             <svg
@@ -82,7 +82,7 @@ const handleSubmit = async (e) => {
           </div>
           <div className=" flex items-center content-center flex-row border-2 p-3">
             <li className=" py-2 text-nowrap">
-              <Link to="/admin/dashboard/products/create">Create</Link>
+              <Link to="/products/create">Create</Link>
             </li>
             <svg
               xmlns="http://www.w3.org/2000/svg"
