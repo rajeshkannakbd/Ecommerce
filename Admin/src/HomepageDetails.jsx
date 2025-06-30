@@ -22,6 +22,7 @@ const HomepageDetails = () =>  {
     
       //  <div className="m-44 mx-56 border-2 border-slate-300 shadow-lg  rounded h-[100px]  w-[210px]">
       <>
+      <h1 className=' absolute top-20 left-96 font-medium text-3xl text-slate-600'>Admin Dashboard</h1>
       <div className=' flex'>
       <div  className="m-44 mx-56 border-2 border-slate-300 shadow-lg  rounded h-[100px]  w-[210px]">
       <h1 className=" m-4 mb-1 text-lg">Number Of Products : <br /> </h1><span className=" mx-[40%] h-10 w-14 rounded-full p-4 text-2xl font-semibold">{productcount}</span>
