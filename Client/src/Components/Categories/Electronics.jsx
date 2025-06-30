@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { cartContext } from "../../App";
+import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Electronics = () => {
   const [products, setProducts] = useState([]);
   const [Electronics, setElectronics] = useState([]);
   const { cartItems, setCartItems } = useContext(cartContext);
+  const navigate = useNavigate()
 
   useEffect(() => {
-    fetch("http://localhost:5000/Product")
+    fetch(`${BASE_URL}/Product`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data.product);
@@ -65,18 +68,28 @@ const Electronics = () => {
                 {product.description}
               </p>
               <div className="flex flex-col sm:flex-row gap-2 justify-between">
-                <button
+               <button
                   onClick={() => handleAdd(product)}
-                  disabled={cartIn(product.id)}
+                  disabled={cartItems.some((item) => item._id === product._id)}
                   className={`${
-                    cartIn(product.id)
-                      ? "bg-gray-400 cursor-not-allowed"
+                    cartItems.some((item) => item._id === product._id)
+                      ? "bg-gray-400"
                       : "bg-yellow-500 hover:bg-yellow-600"
-                  } text-white text-sm px-3 py-2 rounded transition`}
+                  } text-white text-sm px-3 py-1 rounded text-center w-full sm:w-auto`}
                 >
-                  {cartIn(product.id) ? "Added To Cart" : "Add To Cart"}
+                  {cartItems.some((item) => item._id === product._id)
+                    ? "In Cart"
+                    : "Add to Cart"}
                 </button>
-                <button className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 rounded transition">
+                <button
+                  onClick={() => {
+                    if (!cartItems.some((item) => item._id === product._id)) {
+                      setCartItems((prevItems) => [...prevItems, product]);
+                    }
+                    navigate("/cart");
+                  }}
+                  className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded w-full sm:w-auto"
+                >
                   Buy Now
                 </button>
               </div>

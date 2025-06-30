@@ -1,14 +1,18 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { cartContext } from "../../App";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const ProductsDetailPage = () => {
   const { id } = useParams();
   const [products, setProducts] = useState(null);
+  const { cartItems, setCartItems } = useContext(cartContext);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/SingleProduct/${id}`)
+      .get(`${BASE_URL}/SingleProduct/${id}`)
       .then((data) => {
         setProducts(data.data.product);
       })
@@ -23,6 +27,11 @@ const ProductsDetailPage = () => {
     );
   }
 
+    const handleAdd = (product) => {
+    setCartItems((prevItems) => [...prevItems, product]);
+  };
+
+
   return (
     <div className="mt-12 px-4 max-w-7xl mb-20 mx-auto">
       <div className="flex flex-col lg:flex-row gap-10">
@@ -30,7 +39,7 @@ const ProductsDetailPage = () => {
         <div className="w-full lg:w-1/2">
           <div className="border border-slate-200 shadow-md h-auto lg:h-[500px] w-full flex justify-center items-center relative">
             <img
-              src={`http://localhost:5000/uploads/${products.image}`}
+              src={`${BASE_URL}/uploads/${products.image}`}
               alt={products.title}
               className="h-[300px] lg:h-[400px] object-contain"
             />
@@ -53,10 +62,27 @@ const ProductsDetailPage = () => {
           </div>
 
           <div className="flex justify-between mt-6 px-4">
-            <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl w-1/2 mr-2">
-              Add To Cart
-            </button>
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl w-1/2 ml-2">
+           <button
+                  onClick={() => handleAdd(products)}
+                  disabled={cartItems.some((item) => item._id === products._id)}
+                  className={`${
+                    cartItems.some((item) => item._id === products._id)
+                      ? "bg-gray-400"
+                      : "bg-yellow-500 hover:bg-yellow-600"
+                  } text-white px-4 py-2 rounded-xl w-1/2 ml-2 `}
+                >
+                  {cartItems.some((item) => item._id === products._id)
+                    ? "In Cart"
+                    : "Add to Cart"}
+                </button>
+            <button 
+            onClick={() => {
+                    if (!cartItems.some((item) => item._id === products._id)) {
+                      setCartItems((prevItems) => [...prevItems, products]);
+                    }
+                    navigate("/cart");
+                  }}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl w-1/2 ml-2">
               Buy Now
             </button>
           </div>

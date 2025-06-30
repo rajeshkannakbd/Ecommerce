@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { cartContext, Totalcontext } from "../../App";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Order = () => {
   const [name, setName] = useState("");
@@ -38,7 +39,7 @@ const Order = () => {
       }
 
       try {
-        const { data } = await axios.post("http://localhost:5000/create-payment", { total });
+        const { data } = await axios.post(`${BASE_URL}/create-payment`, { total });
 
         const options = {
           key: data.key,
@@ -49,7 +50,7 @@ const Order = () => {
           order_id: data.order.id,
           handler: async function (response) {
             const verifyRes = await axios.post(
-              "http://localhost:5000/verify-payment",
+              `${BASE_URL}/verify-payment`,
               { ...response, orderDetails: orderData }
             );
 
@@ -79,7 +80,7 @@ const Order = () => {
       }
     } else {
       try {
-        const response = await axios.post("http://localhost:5000/order", orderData);
+        const response = await axios.post(`${BASE_URL}/order`, orderData);
         if (response.status === 201) {
           alert("Order placed successfully!");
           setCartItems([]);

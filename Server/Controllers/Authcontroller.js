@@ -50,23 +50,20 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // ✅ Explicitly select the password field
     const user = await UserModel.findOne({ email }).select("+password");
 
     if (!user) {
       console.log("No user found with email:", email);
-      return res
-        .status(404)
-        .json({ status: "error", message: "No user exists" });
+      return res.status(404).json({ status: "error", message: "No user exists" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
+
     if (!isPasswordValid) {
       console.log("Invalid password for user:", email);
-      return res
-        .status(401)
-        .json({ status: "error", message: "Invalid password" });
+      return res.status(401).json({ status: "error", message: "Invalid password" });
     }
-
     res.status(200).json({
       status: "success",
       user: {
@@ -80,6 +77,7 @@ exports.login = async (req, res) => {
     res.status(500).json({ status: "error", message: "Server error", err });
   }
 };
+
 
 /*__PRODUCT LISTING ROUtE__*/
 

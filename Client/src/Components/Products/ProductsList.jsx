@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { cartContext } from "../../App";
 import { Link, useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const ProductsList = () => {
   const [products, setProducts] = useState([]);
@@ -8,7 +9,7 @@ const ProductsList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/Product")
+    fetch(`${BASE_URL}/Product`)
       .then((res) => res.json())
       .then((data) => setProducts(data.product))
       .catch((error) => console.error("Failed to fetch products:", error));
@@ -38,11 +39,15 @@ const ProductsList = () => {
             </Link>
             <div className="px-4 py-2 flex-1 flex flex-col justify-between">
               <div>
-                <h2 className="text-lg font-semibold mb-1 truncate">{product.title}</h2>
+                <h2 className="text-lg font-semibold mb-1 truncate">
+                  {product.title}
+                </h2>
                 <p className="text-green-600 font-bold mb-1">
                   ₹{product.price.toFixed(0)}
                 </p>
-                <p className="text-sm text-gray-600 mb-2 line-clamp-2">{product.desc}</p>
+                <p className="text-sm text-gray-600 mb-2 line-clamp-2">
+                  {product.desc}
+                </p>
                 <div className="flex items-center text-sm text-gray-600 mb-3">
                   Ratings: {product.rating}
                   <svg
@@ -76,7 +81,12 @@ const ProductsList = () => {
                     : "Add to Cart"}
                 </button>
                 <button
-                  onClick={() => navigate("/order")}
+                  onClick={() => {
+                    if (!cartItems.some((item) => item._id === product._id)) {
+                      setCartItems((prevItems) => [...prevItems, product]);
+                    }
+                    navigate("/cart");
+                  }}
                   className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded w-full sm:w-auto"
                 >
                   Buy Now

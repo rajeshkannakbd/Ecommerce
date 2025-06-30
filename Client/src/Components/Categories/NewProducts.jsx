@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cartContext } from '../../App';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const NewProducts = () => {
   const [products, setProducts] = useState([]);
@@ -9,7 +10,7 @@ const NewProducts = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/Product")
+    axios.get(`${BASE_URL}/Product`)
       .then((response) => {
         setProducts(response.data.product);
       })
@@ -71,16 +72,24 @@ const NewProducts = () => {
                 <button
                   onClick={() => handleAdd(product)}
                   disabled={cartItems.some((item) => item._id === product._id)}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded disabled:cursor-not-allowed disabled:bg-yellow-600"
+                  className={`${
+                    cartItems.some((item) => item._id === product._id)
+                      ? "bg-gray-400"
+                      : "bg-yellow-500 hover:bg-yellow-600"
+                  } text-white text-sm px-3 py-1 rounded text-center w-full sm:w-auto`}
                 >
                   {cartItems.some((item) => item._id === product._id)
                     ? "In Cart"
                     : "Add to Cart"}
                 </button>
-
                 <button
-                  onClick={() => navigate("/order")}
-                  className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded"
+                  onClick={() => {
+                    if (!cartItems.some((item) => item._id === product._id)) {
+                      setCartItems((prevItems) => [...prevItems, product]);
+                    }
+                    navigate("/cart");
+                  }}
+                  className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded w-full sm:w-auto"
                 >
                   Buy Now
                 </button>

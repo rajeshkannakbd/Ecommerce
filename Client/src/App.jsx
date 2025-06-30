@@ -40,8 +40,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [isAunthencate, setIsAuthencate] = useState(false);
   const [userName, setUserName] = useState("");
-  const [role, setRole] = useState("");
-
+  const [role, setRole] = useState(""); 
   return (
     <cartContext.Provider
       value={{
@@ -69,6 +68,7 @@ function App() {
                 <Route path="jewelery" element={<Jewelery />} />
                 <Route path="signup" element={<Register />} />
                 <Route path="login" element={<Login />} />
+                <Route path="/userdetails" element={<UserDetails />} />
                 <Route path="latestProducts" element={<NewProducts />} />
                 <Route path="ProductDetail/:id" element={<ProductsDetailPage />} />
                 <Route path="cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />

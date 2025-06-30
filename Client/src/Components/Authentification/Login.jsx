@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { cartContext } from "../../App";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +14,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/login", { email, password })
+      .post(`${BASE_URL}/login`, { email, password })
       .then((result) => {
         const user = result.data?.user;
         if (user && user.name) {
