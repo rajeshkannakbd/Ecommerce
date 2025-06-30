@@ -11,3 +11,15 @@ services:
         value: production
       - key: PORT
         value: 5000
+
+  - type: web
+    name: ecommerce-client
+    env: static
+    branch: main
+    repo: https://github.com/rajeshkannakbd/Ecommerce
+    buildCommand: cd Client && npm install && npm run build
+    staticPublishPath: Client/dist
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://ecommerce-backend.onrender.com
+
