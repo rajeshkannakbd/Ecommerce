@@ -7,7 +7,7 @@ import DashboardHome from "./DashboardHome";
 import Homepage from "./Components/Homepage";
 import EditProduct from "./Components/Products/EditProduct";
 import UserDetail from "./Components/Users/UserDetail";
-import OrderDetails from "./Components/Orders/orderDetails";
+import OrderDetails from "./Components/Orders/OrderDetails";
 import HomepageDetails from "./HomepageDetails";
 
 function App() {
