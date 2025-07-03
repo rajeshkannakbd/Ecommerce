@@ -32,7 +32,7 @@ const ProductsList = () => {
           >
             <Link to={`/ProductDetail/${product._id}`}>
               <img
-                src={`${BASE_URL}/uploads/${product.image}`}
+                src={`http://localhost:5000/uploads/${product.image}`}
                 alt={product.title}
                 className="h-48 w-full object-contain p-4 bg-white"
               />
