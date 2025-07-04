@@ -2,9 +2,9 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="bg-slate-900 text-white px-4 pt-6">
+    <div className="bg-slate-900   text-white px-4 pt-6">
       {/* Top Footer Grid */}
-      <div className="flex flex-col lg:flex-row flex-wrap justify-between gap-6 lg:gap-0 mx-auto max-w-7xl">
+      <div className="flex flex-col lg:flex-row flex-wrap justify-between gap-6 lg:gap-0 mx-auto py-10 px-10">
         {/* Column 1 */}
         <div className="min-w-[200px]">
           <h1 className="text-slate-500 mb-2 text-lg font-normal">About</h1>
