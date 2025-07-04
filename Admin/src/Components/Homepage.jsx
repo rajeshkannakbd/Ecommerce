@@ -123,7 +123,7 @@ const Homepage = () => {
       <aside className="w-full md:w-[220px] bg-slate-700 text-white md:h-screen md:sticky md:top-0 flex-shrink-0 z-10">
         <ul className="flex md:flex-col flex-row md:gap-6 gap-2 p-4 md:mx-6 justify-around md:justify-start">
           {/* Home */}
-          <li className="flex items-center gap-2">
+          <li className="flex items-center gap-2 my-5">
             <Link to="/" className="text-lg font-semibold hover:underline">
               Home
             </Link>
@@ -133,7 +133,7 @@ const Homepage = () => {
           </li>
 
           {/* Products */}
-          <li className="flex items-center gap-2">
+          <li className="flex items-center gap-2 my-5">
             <Link to="/products" className="text-lg font-semibold hover:underline">
               Products
             </Link>
@@ -143,7 +143,7 @@ const Homepage = () => {
           </li>
 
           {/* Users */}
-          <li className="flex items-center gap-2">
+          <li className="flex items-center gap-2 my-5">
             <Link to="/userdetail" className="text-lg font-semibold hover:underline">
               Users
             </Link>
@@ -153,7 +153,7 @@ const Homepage = () => {
           </li>
 
           {/* Orders */}
-          <li className="flex items-center gap-2">
+          <li className="flex items-center gap-2 my-5">
             <Link to="/orderdetail" className="text-lg font-semibold hover:underline">
               Orders
             </Link>
