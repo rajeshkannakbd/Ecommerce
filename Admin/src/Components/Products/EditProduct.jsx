@@ -58,7 +58,7 @@ const handleSubmit = async (e) => {
       count: Number(formData.count),
     };
 
-    await axios.put(`http://localhost:5000/Product/${id}`, payload);
+    await axios.put(`https://ecommerce-sjhs.onrender.com/Product/${id}`, payload);
 
     alert("Product updated successfully.");
     navigate("/products");

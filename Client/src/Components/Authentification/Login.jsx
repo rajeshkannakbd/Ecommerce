@@ -68,6 +68,7 @@ const Login = () => {
               className=" outline-none w-full"
               required
             />{" "}
+            {!password.trim() ? "" :
             <button
               type="button"
               onClick={() => setShow(!show)}
@@ -109,7 +110,7 @@ const Login = () => {
                   />
                 </svg>
               )}
-            </button>
+            </button>}
           </div>
           <button
             type="submit"
