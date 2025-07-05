@@ -153,7 +153,6 @@ exports.newitem = async (req, res) => {
 
 exports.deleteitem = async (req, res) => {
   const { id } = req.params;
-
   try {
     const deletedProduct = await itemModel.findByIdAndDelete(id);
     if (!deletedProduct) {
@@ -388,6 +387,61 @@ exports.verifyPayment = async (req, res) => {
     return res
       .status(400)
       .json({ success: false, message: "Payment verification failed" });
+  }
+};
+
+exports.deleteOrder = async(req,res)=>{
+     const { id } = req.params;
+  try {
+    const deletedOrder = await OrderModel.findByIdAndDelete(id);
+    if (!deletedOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+    res.status(200).json({ message: "Order deleted successfully" });
+  } catch (err) {
+    console.error("Delete error:", err);
+    res.status(500).json({ message: "Server error during deletion" });
+  }
+}
+
+exports.deleteuser = async(req,res)=>{
+     const { id } = req.params;
+  try {
+    const deletedOrder = await UserModel.findByIdAndDelete(id);
+    if (!deletedOrder) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (err) {
+    console.error("Delete error:", err);
+    res.status(500).json({ message: "Server error during deletion" });
+  }
+}
+
+exports.GetuserById = async(req,res)=>{
+     const { id } = req.params;
+      console.log("Fetching user by ID:", id); 
+  try {
+    const User = await UserModel.findById(id);
+    if (!User) return res.status(404).json({ message: "User not found" });
+    res.json({ User });
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving User", error });
+  }
+}
+
+exports.updateUser = async (req, res) => {
+  const { id } = req.params;
+  const updatedData = req.body;
+
+  try {
+    const User = await UserModel.findByIdAndUpdate(id, updatedData, {
+      new: true,
+    });
+    if (!User) return res.status(404).json({ message: "User not found" });
+    res.json({ message: "User updated successfully", User });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating User", error });
   }
 };
 

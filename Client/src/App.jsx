@@ -16,13 +16,8 @@ import Login from "./Components/Authentification/Login";
 import Order from "./Components/Order/Order";
 import Cart from "./Components/Cart/Cart";
 import Search from "./Components/Categories/Search";
-import AdminRoutes from "./Components/Producted/AdminRoutes";
 import UserDetails from "./Components/Authentification/UserDetails";
-import Dasboard from "./Components/Admin/Dasboard";
-import Products from "./Components/Admin/Products";
-import CreateProduct from "./Components/Admin/CreateProduct";
 import ProtectedRoute from "./Components/Authentification/ProtectedRoute";
-import DasboardLayout from "./Components/Admin/DasboardLayout";
 import ProductsDetailPage from "./Components/Products/ProductsDetailPage";
 import NewProducts from "./Components/Categories/NewProducts";
 import MainLayout from "./Components/Layots/Mainlayout";
@@ -76,13 +71,6 @@ function App() {
                 <Route path="search" element={<Search />} />
                 <Route path="userdetails" element={<ProtectedRoute><UserDetails /></ProtectedRoute>} />
               </Route>
-
-              {/* Admin routes (optional layout) */}
-              {/* <Route path="/admin/dashboard" element={<AdminRoutes><DasboardLayout /></AdminRoutes>}>
-                <Route index element={<Dasboard />} />
-                <Route path="products" element={<Products />} />
-                <Route path="products/create" element={<CreateProduct />} />
-              </Route> */}
             </Routes>
       
         </searchContext.Provider>
