@@ -37,7 +37,7 @@ const EditUser = () => {
 const handlesubmit= (e)=>{
    e.preventDefault();
   try {
-    axios.put(`https://ecommerce-sjhs.onrender.com/user/edit/${id}`)
+    axios.put(`https://ecommerce-sjhs.onrender.com/user/edit/${id}`,formData)
     alert("User Upadated")
     navigate("/userdetail")
   } catch (error) {
