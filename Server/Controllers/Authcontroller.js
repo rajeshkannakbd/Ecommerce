@@ -241,12 +241,11 @@ exports.uploadProductWithImage = async (req, res) => {
     // const image = req.file?.filename;
     // console.log("req.file", req.file);
 
-    if (!title || !desc || !price || !category || !image) {
+    if (!title || !desc || !price || !category || !imageUrl) {
       return res
         .status(400)
         .json({ message: "All fields including image are required" });
     }
-
     const newItem = new itemModel({
       title,
       desc,
