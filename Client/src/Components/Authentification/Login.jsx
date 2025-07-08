@@ -8,20 +8,23 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
-  const { isAunthencate, setIsAuthencate, setUserName, role, setRole } =
+  const { isAunthencate, setIsAuthencate, setUserName, role, setRole,useremail,setUseremail } =
     useContext(cartContext);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
     axios
       .post(`${BASE_URL}/login`, { email, password })
       .then((result) => {
         const user = result.data?.user;
         if (user && user.name) {
           setUserName(user.name);
+          setUseremail(user.email)
           setRole(user.role);
           setIsAuthencate(true);
+          localStorage.setItem("cart", JSON.stringify(savedCart));
           navigate("/cart");
         }
       })

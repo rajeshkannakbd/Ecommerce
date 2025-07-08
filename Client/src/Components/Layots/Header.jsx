@@ -76,7 +76,7 @@ const Header = () => {
             <Link to="/latestProducts" className="hover:text-green-600">
               What's New
             </Link>
-            <Link to="#" className="hover:text-green-600">
+            <Link to="/orderhistory" className="hover:text-green-600">
               Delivery
             </Link>
 

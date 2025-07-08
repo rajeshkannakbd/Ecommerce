@@ -10,6 +10,7 @@ const Order = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [address, setAddress] = useState("");
   const [payment, setPayment] = useState("");
+  const [orderstatus, setOrderstatus] = useState("ordered");
   const [showErrors, setShowErrors] = useState(false);
   const { cartItems, setCartItems } = useContext(cartContext);
   const { total } = useContext(Totalcontext);
@@ -29,6 +30,7 @@ const Order = () => {
       payment,
       cartItems: [...cartItems],
       total: Number(total),
+      orderstatus,
     };
 
     if (payment === "online payment") {
@@ -39,20 +41,22 @@ const Order = () => {
       }
 
       try {
-        const { data } = await axios.post(`${BASE_URL}/create-payment`, { total });
+        const { data } = await axios.post(`http://localhost:5000/create-payment`, {
+          total,
+        });
 
         const options = {
           key: data.key,
           amount: data.order.amount,
           currency: "INR",
-          name: "My Shop",
+          name: "Shop Cart",
           description: "Test Transaction",
           order_id: data.order.id,
           handler: async function (response) {
-            const verifyRes = await axios.post(
-              `${BASE_URL}/verify-payment`,
-              { ...response, orderDetails: orderData }
-            );
+            const verifyRes = await axios.post(`http://localhost:5000/verify-payment`, {
+              ...response,
+              orderDetails: orderData,
+            });
 
             if (verifyRes.data.success) {
               alert("Payment successful and order placed!");
@@ -80,7 +84,7 @@ const Order = () => {
       }
     } else {
       try {
-        const response = await axios.post(`${BASE_URL}/order`, orderData);
+        const response = await axios.post(`http://localhost:5000/order`, orderData);
         if (response.status === 201) {
           alert("Order placed successfully!");
           setCartItems([]);
@@ -123,7 +127,9 @@ const Order = () => {
               className="mt-1 p-2 border rounded w-full"
             />
             {showErrors && !name && (
-              <span className="text-red-500 text-sm">* Please enter the name</span>
+              <span className="text-red-500 text-sm">
+                * Please enter the name
+              </span>
             )}
           </div>
 
@@ -141,7 +147,9 @@ const Order = () => {
               className="mt-1 p-2 border rounded w-full"
             />
             {showErrors && !mobileNumber && (
-              <span className="text-red-500 text-sm">* Please enter the mobile number</span>
+              <span className="text-red-500 text-sm">
+                * Please enter the mobile number
+              </span>
             )}
           </div>
 
@@ -155,7 +163,9 @@ const Order = () => {
               className="mt-1 p-2 border rounded w-full"
             />
             {showErrors && !email && (
-              <span className="text-red-500 text-sm">* Please enter a valid email</span>
+              <span className="text-red-500 text-sm">
+                * Please enter a valid email
+              </span>
             )}
           </div>
 
@@ -169,7 +179,9 @@ const Order = () => {
               type="text"
             />
             {showErrors && !address && (
-              <span className="text-red-500 text-sm">* Please enter the address</span>
+              <span className="text-red-500 text-sm">
+                * Please enter the address
+              </span>
             )}
           </div>
 
@@ -203,7 +215,9 @@ const Order = () => {
               </label>
             </div>
             {showErrors && !payment && (
-              <span className="text-red-500 text-sm">* Please select a payment method</span>
+              <span className="text-red-500 text-sm">
+                * Please select a payment method
+              </span>
             )}
           </div>
 

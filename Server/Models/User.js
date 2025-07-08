@@ -53,6 +53,11 @@ const OrderSchema = new mongoose.Schema({
   payment: String,
   cart: Array,
   total: Number,
+ orderstatus: {
+  type: String,
+  enum: ["pending", "completed"],
+  default: "pending",
+}
 });
 
 const UserModel = mongoose.model("Users", UserSchema);

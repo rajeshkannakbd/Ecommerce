@@ -168,8 +168,11 @@ exports.deleteitem = async (req, res) => {
 /*__ORDER PALCING USER DEATIS ROUTE__*/
 
 exports.order = async (req, res) => {
-  const { name, email, mobileNumber, address, payment, cartItems, total } =
+  
+  const { name, email, mobileNumber, address, payment, cartItems, total , orderstatus } =
     req.body;
+   
+
 
   if (
     !name ||
@@ -192,6 +195,7 @@ exports.order = async (req, res) => {
       payment,
       cart: cartItems,
       total,
+      orderstatus,
     });
 
     await newOrder.save();
@@ -233,8 +237,9 @@ exports.updateProduct = async (req, res) => {
 exports.uploadProductWithImage = async (req, res) => {
   try {
     const { title, desc, price, category, rating, count } = req.body;
-    const image = req.file?.filename;
-    console.log("req.file", req.file);
+    const imageUrl = req.file.path;
+    // const image = req.file?.filename;
+    // console.log("req.file", req.file);
 
     if (!title || !desc || !price || !category || !image) {
       return res
@@ -247,7 +252,7 @@ exports.uploadProductWithImage = async (req, res) => {
       desc,
       price,
       category,
-      image: image,
+      image: imageUrl,
       rating,
       count,
     });
@@ -321,6 +326,7 @@ exports.createPayment = async (req, res) => {
 };
 
 const sendOrderEmail = require("../utils/Mailer");
+const { stat } = require("fs");
 
 exports.verifyPayment = async (req, res) => {
   const {
@@ -343,8 +349,9 @@ exports.verifyPayment = async (req, res) => {
   }
 
   if (expectedSignature === razorpay_signature) {
-    const { name, email, mobileNumber, address, payment, cartItems, total } =
-      orderDetails;
+   
+    const { name, email, mobileNumber, address, payment, cartItems, total , orderstatus } = orderDetails;
+      
 
     try {
       const newOrder = new OrderModel({
@@ -355,8 +362,9 @@ exports.verifyPayment = async (req, res) => {
         payment,
         cart: cartItems,
         total,
+        orderstatus,
       });
-
+      
       await newOrder.save();
 
       // ✅ Send email without route
@@ -371,7 +379,7 @@ exports.verifyPayment = async (req, res) => {
       `;
 
       await sendOrderEmail(email, "Order Confirmation", emailBody);
-
+      
       return res.status(200).json({
         success: true,
         message: "Payment verified, order stored, and email sent",

@@ -46,7 +46,7 @@ const handleSubmit = async (e) => {
       setCategory("");
       setRating("");
       setFile(null);
-      // setShowErrors(false); <-- remove this if undefined
+      
     }
   } catch (error) {
     console.error("Upload error:", error);

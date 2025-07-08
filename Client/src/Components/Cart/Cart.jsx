@@ -37,6 +37,21 @@ const Cart = () => {
     setTotal(newTotal.toFixed(2));
   }, [cartItems]);
 
+  const removeItem = (id) => {
+    const updatedCart = cartItems.filter((item) => item._id !== id);
+    setCartItems(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const clearCart = () => {
+    setCartItems([]);
+    localStorage.removeItem("cart");
+  };
+
   if (cartItems.length === 0) {
     return (
       <div className="relative top-12 mx-4 mb-96 pb-32">
@@ -57,8 +72,15 @@ const Cart = () => {
   return (
     <Totalcontext.Provider value={{ total }}>
       <div className="relative top-12 pb-32 px-4  max-w-screen">
-        <h1 className="text-2xl font-bold mb-6">Cart Items</h1>
-
+        <div className=" flex w-full relative ">
+          <h1 className="text-2xl font-bold mb-6">Cart Items</h1>
+          <button
+            className=" absolute right-3 text-base border border-slate-100 rounded p-2 shadow-sm bg-slate-100"
+            onClick={clearCart}
+          >
+            Clear Cart
+          </button>
+        </div>
         <div className="flex flex-col gap-6">
           {cartItems.map((product) => (
             <div
@@ -66,7 +88,7 @@ const Cart = () => {
               className="flex flex-col md:flex-row items-center gap-6 border border-gray-300 p-4 rounded-lg shadow bg-white"
             >
               <img
-                 src={`${BASE_URL}/uploads/${product.image}`}
+                src={`${BASE_URL}/uploads/${product.image}`}
                 alt="product"
                 className="w-full md:w-48 h-[300px] object-contain"
               />
@@ -97,6 +119,12 @@ const Cart = () => {
                     -
                   </button>
                 </div>
+                <button
+                  onClick={() => removeItem(product._id)}
+                  className="mt-6 bg-red-400 hover:bg-red-600 text-white px-4 py-1 rounded-full text-sm w-fit"
+                >
+                  Remove from Cart
+                </button>
               </div>
             </div>
           ))}
