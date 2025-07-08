@@ -11,7 +11,7 @@ const OrderHistory = () => {
   useEffect(() => {
     if (useremail) {
       axios
-        .get(`http://localhost:5000/userOrders?email=${useremail}`)
+        .get(`${BASE_URL}/userOrders?email=${useremail}`)
         .then((res) => {
           setOrders(res.data.orders);
         })

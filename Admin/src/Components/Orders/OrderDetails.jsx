@@ -6,7 +6,7 @@ const OrderDetails = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/orderDetails")
+      .get("https://ecommerce-sjhs.onrender.com/orderDetails")
       .then((data) => {
         setOrders(data.data.orders);
         console.log(data.data.orders);
@@ -19,7 +19,7 @@ const OrderDetails = () => {
       return;
 
     try {
-      await axios.delete(`http://localhost:5000/deleteorder/${id}`);
+      await axios.delete(`https://ecommerce-sjhs.onrender.com/deleteorder/${id}`);
       setOrders(orders.filter((order) => order._id !== id));
       alert("Order deleted successfully.");
     } catch (error) {
@@ -143,7 +143,7 @@ const OrderDetails = () => {
                               : "completed";
 
                           const response = await axios.put(
-                            `http://localhost:5000/Order/${order._id}`,
+                            `https://ecommerce-sjhs.onrender.com/Order/${order._id}`,
                             {
                               orderstatus: updatedStatus,
                             }
