@@ -120,7 +120,7 @@
                   className="flex flex-col md:flex-row items-center gap-6 border border-gray-300 p-4 rounded-lg shadow bg-white"
                 >
                   <img
-                    src={`http://localhost:5000/uploads/${product.image}`}
+                    src={`${BASE_URL}/uploads/${product.image}`}
                     alt="product"
                     className="w-full md:w-48 h-[300px] object-contain"
                   />
