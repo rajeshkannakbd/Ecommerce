@@ -33,7 +33,7 @@ const handleSubmit = async (e) => {
 
   try {
     const response = await axios.post(
-      "https://ecommerce-sjhs.onrender.com/upload-product",
+      "http://localhost:5000/upload-product",
       formData,
       
     );
@@ -49,8 +49,8 @@ const handleSubmit = async (e) => {
       
     }
   } catch (error) {
-    console.error("Upload error:", error);
-    alert(error.response?.data?.message || "Upload failed.");
+    console.log("Upload error:", error);
+    alert(error.response?.data?.message);
   }
 };
 

@@ -64,7 +64,6 @@ function App() {
         <searchContext.Provider value={{ search, setSearch }}>
         
             <Routes>
-              {/* Main public routes layout */}
               <Route path="/" element={<MainLayout />}>
                 <Route index element={<Homepage />} />
                 <Route path="products" element={<ProductsList />} />

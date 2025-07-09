@@ -5,7 +5,7 @@ import Top from "./Top";
 
 const Header = () => {
   const [categories, setCategories] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // 🔄 mobile menu toggle
+  const [menuOpen, setMenuOpen] = useState(false);
   const { cartItems, userName, role, user } = useContext(cartContext);
   const { search, setSearch } = useContext(searchContext);
   const navigate = useNavigate();
@@ -18,7 +18,6 @@ const Header = () => {
       <Top />
       <header className="w-full bg-white shadow-md fixed top-[54px] md:top-[36px] z-30">
         <div className="flex justify-between items-center px-4 py-3 md:px-8">
-          {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -44,8 +43,6 @@ const Header = () => {
             </svg>
             <h1 className="font-bold text-lg">SHOP CART</h1>
           </Link>
-
-          {/* Hamburger Button */}
           <button
             onClick={toggleMenu}
             className="md:hidden text-gray-700 focus:outline-none"
@@ -67,8 +64,6 @@ const Header = () => {
               />
             </svg>
           </button>
-
-          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             <Link to="/" className="hover:text-green-600">
               Home
@@ -118,8 +113,6 @@ const Header = () => {
                 </ul>
               )}
             </div>
-
-            {/* Search */}
             <div className="relative w-[200px]">
               <input
                 type="text"
@@ -144,20 +137,29 @@ const Header = () => {
               </svg>
             </div>
           </nav>
-
-          {/* Account & Cart */}
           <div className="hidden md:flex gap-6 items-center">
-            <Link to={'/userdetails'} className="flex gap-1 items-center hover:text-green-600">
-            <svg className="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                d="M15.75 6a3.75 3.75 0 1 1-7.5 0
+            <Link
+              to={"/userdetails"}
+              className="flex gap-1 items-center hover:text-green-600"
+            >
+              <svg
+                className="w-6 h-6"
+                stroke="currentColor"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0
                 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5
                 7.5 0 0 1 14.998 0A17.933 17.933 0 0
                 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-              />
-            </svg>
-            <span>{isUserLoggedIn ? userName : "Account"}</span>
-          </Link>
+                />
+              </svg>
+              <span>{isUserLoggedIn ? userName : "Account"}</span>
+            </Link>
             <Link
               to="/cart"
               className="relative flex gap-1 items-center hover:text-green-600"
@@ -190,8 +192,6 @@ const Header = () => {
             </Link>
           </div>
         </div>
-
-        {/* Mobile Dropdown */}
         {menuOpen && (
           <div className="md:hidden px-4 py-3 space-y-4 bg-white shadow-lg border-t">
             <Link to="/" onClick={toggleMenu} className="block">

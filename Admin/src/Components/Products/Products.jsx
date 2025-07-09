@@ -102,7 +102,7 @@ const Products = () => {
                   <td className=" text-center p-2 border">{index + 1}</td>
                   <td className=" text-center p-2 border">
                     <img
-                      src={`https://ecommerce-sjhs.onrender.com/uploads/${product.image}`}
+                      src={`http://localhost:5000/uploads/${product.image}`}
                       className=" h-[70px] w-[70px] object-contain relative left-20 p-2"
                       alt={product.title}
                     />

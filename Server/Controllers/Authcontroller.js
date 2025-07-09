@@ -168,7 +168,7 @@ exports.deleteitem = async (req, res) => {
 /*__ORDER PALCING USER DEATIS ROUTE__*/
 
 exports.order = async (req, res) => {
-  
+  console.log("===> Order payload", req.body);
   const { name, email, mobileNumber, address, payment, cartItems, total , orderstatus } =
     req.body;
    
@@ -193,12 +193,13 @@ exports.order = async (req, res) => {
       mobileNumber,
       address,
       payment,
-      cart: cartItems,
+      cartItems: cartItems,
       total,
       orderstatus,
     });
 
     await newOrder.save();
+     console.log("✅ Order saved successfully");
     return res.status(201).json({ message: "Order placed successfully!" });
   } catch (error) {
     console.error("Error placing order:", error);
@@ -207,6 +208,8 @@ exports.order = async (req, res) => {
       .json({ message: "Server error while placing order" });
   }
 };
+
+/*__SHOWING SINGLE PRODUCT  ROUTE__*/
 
 exports.getProductById = async (req, res) => {
   const { id } = req.params;
@@ -218,6 +221,8 @@ exports.getProductById = async (req, res) => {
     res.status(500).json({ message: "Error retrieving product", error });
   }
 };
+
+/*__UPDATING PRODUCT ROUTE__*/
 
 exports.updateProduct = async (req, res) => {
   const { id } = req.params;
@@ -234,14 +239,16 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
+/*__UPLOAD PRODUCT WITH IMAGE ROUTE__*/
+
 exports.uploadProductWithImage = async (req, res) => {
   try {
     const { title, desc, price, category, rating, count } = req.body;
-    const imageUrl = req.file.path;
-    // const image = req.file?.filename;
+    // const imageUrl = req.file.path;
+    const image = req.file?.filename;
     // console.log("req.file", req.file);
 
-    if (!title || !desc || !price || !category || !imageUrl) {
+    if (!title || !desc || !price || !category || !image) {
       return res
         .status(400)
         .json({ message: "All fields including image are required" });
@@ -251,7 +258,7 @@ exports.uploadProductWithImage = async (req, res) => {
       desc,
       price,
       category,
-      image: imageUrl,
+      image: image,
       rating,
       count,
     });
@@ -264,6 +271,8 @@ exports.uploadProductWithImage = async (req, res) => {
   }
 };
 
+/*__USER DETAIL ROUTE__*/
+
 exports.userDetails = async (req, res) => {
   const users = await UserModel.find({});
   res.json({
@@ -271,6 +280,8 @@ exports.userDetails = async (req, res) => {
     users,
   });
 };
+
+/*__ORDER DETAIL ROUTE ROUTE__*/
 
 exports.orderDetails = async (req, res) => {
   try {
@@ -291,6 +302,8 @@ exports.orderDetails = async (req, res) => {
 //   key_id: process.env.RAZORPAY_KEY_ID,
 //   key_secret: process.env.RAZORPAY_KEY_SECRET,
 // });
+
+/*__PAYMENT ROUTE__*/
 
 exports.createPayment = async (req, res) => {
   const { total } = req.body;
@@ -325,7 +338,6 @@ exports.createPayment = async (req, res) => {
 };
 
 const sendOrderEmail = require("../utils/Mailer");
-const { stat } = require("fs");
 
 exports.verifyPayment = async (req, res) => {
   const {
@@ -359,7 +371,7 @@ exports.verifyPayment = async (req, res) => {
         mobileNumber,
         address,
         payment,
-        cart: cartItems,
+        cartItems: cartItems,
         total,
         orderstatus,
       });
@@ -384,8 +396,8 @@ exports.verifyPayment = async (req, res) => {
         message: "Payment verified, order stored, and email sent",
       });
     } catch (err) {
-      console.error("Error Saving Order or Sending Email:", err);
-      return res.status(500).json({
+      console.log("Error Saving Order or Sending Email:", err);
+      return  res.status(500).json({
         success: false,
         message: "Order saved but email sending failed",
       });
@@ -396,6 +408,8 @@ exports.verifyPayment = async (req, res) => {
       .json({ success: false, message: "Payment verification failed" });
   }
 };
+
+/*__DELETING ORDER ROUTE__*/
 
 exports.deleteOrder = async(req,res)=>{
      const { id } = req.params;
@@ -411,6 +425,8 @@ exports.deleteOrder = async(req,res)=>{
   }
 }
 
+/*__DELETE USER ROUTE__*/
+
 exports.deleteuser = async(req,res)=>{
      const { id } = req.params;
   try {
@@ -425,6 +441,8 @@ exports.deleteuser = async(req,res)=>{
   }
 }
 
+/*__GETTING SINGLE USER ROUTE__*/
+
 exports.GetuserById = async(req,res)=>{
      const { id } = req.params;
       console.log("Fetching user by ID:", id); 
@@ -436,6 +454,8 @@ exports.GetuserById = async(req,res)=>{
     res.status(500).json({ message: "Error retrieving User", error });
   }
 }
+
+/*__UPDATING USER ROUTE__*/
 
 exports.updateUser = async (req, res) => {
   const { id } = req.params;

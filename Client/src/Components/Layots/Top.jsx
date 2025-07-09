@@ -24,7 +24,6 @@ const Top = () => {
   return (
     <div className="h-auto py-1 px-4 z-30 w-full fixed top-0 bg-green-900 text-white text-xs sm:text-sm shadow-md">
       <div className="flex flex-wrap justify-between items-center gap-2 sm:gap-4">
-        {/* Contact */}
         <div className="flex items-center gap-1 whitespace-nowrap">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -45,34 +44,25 @@ const Top = () => {
           </svg>
           <span className="truncate">+91 123456789</span>
         </div>
-
-        {/* Offer text */}
         <div className="hidden md:block text-center flex-grow truncate">
           Get 50% offers on Selected items |{" "}
           <Link to="/products" className="underline">
             Shop now
           </Link>
         </div>
-
-        {/* Right-side: Language, Location, Auth */}
         <div className="flex items-center gap-2 sm:gap-3 flex-nowrap ml-auto whitespace-nowrap">
-          {/* Language */}
           <select className="rounded-full px-2 bg-transparent text-white outline-none">
             <option className="text-black">Lang</option>
             <option className="text-black">English</option>
             <option className="text-black">Tamil</option>
             <option className="text-black">Hindi</option>
           </select>
-
-          {/* Location */}
           <select className="rounded-full px-2 bg-transparent text-white outline-none">
             <option className="text-black">Location</option>
             <option className="text-black">Trichy</option>
             <option className="text-black">Chennai</option>
             <option className="text-black">Bangalore</option>
           </select>
-
-          {/* Auth Buttons */}
           {!isAunthencate ? (
             <>
               <button

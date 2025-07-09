@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { cartContext } from "../../App";
 import { useNavigate } from "react-router-dom";
+import { BlinkBlur } from "react-loading-indicators";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Jewelery = () => {
   const [products, setProducts] = useState([]);
   const [Jewelery, setJewelery] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { cartItems, setCartItems } = useContext(cartContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${BASE_URL}/Product`)
@@ -18,6 +20,7 @@ const Jewelery = () => {
           (product) => product.category === "jewelery"
         );
         setJewelery(filtered);
+        setLoading(false);
       })
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
@@ -34,9 +37,22 @@ const Jewelery = () => {
     return (
       <div className="relative top-12 mx-4 mb-96 pb-32">
         <h1 className="text-2xl font-bold mb-4">Jewelery Items</h1>
-        <div className="mx-auto text-center mt-8">
-          <h2 className="mb-4 text-lg">Currently Unavailable !!</h2>
-        </div>
+        {loading ? (
+          <div className="flex justify-center items-center min-h-screen px-4 -mt-40 sm:px-8">
+            <div className="text-sm sm:text-base md:text-lg lg:text-xl">
+              <BlinkBlur
+                color="#32cd32"
+                size="large"
+                text="loading..."
+                textColor=""
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="mx-auto text-center mt-40">
+            <h2 className="mb-4 text-lg">Currently Unavailable !!</h2>
+          </div>
+        )}
       </div>
     );
   }
@@ -46,6 +62,16 @@ const Jewelery = () => {
       <h1 className="text-xl sm:text-2xl font-bold mb-6 text-center sm:text-left">
         Jewelery
       </h1>
+      {loading ? <div className="flex justify-center items-center min-h-screen px-4 -mt-40 sm:px-8">
+                <div className="text-sm sm:text-base md:text-lg lg:text-xl">
+                  <BlinkBlur
+                    color="#32cd32"
+                    size="large"
+                    text="loading..."
+                    textColor=""
+                  />
+                </div>
+              </div> :
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {Jewelery.map((product) => (
           <div
@@ -53,7 +79,7 @@ const Jewelery = () => {
             className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
           >
             <img
-            src={`${BASE_URL}/uploads/${product.image}`}
+              src={`${BASE_URL}/uploads/${product.image}`}
               alt={product.title}
               className="h-48 w-full object-contain p-4 bg-white"
             />
@@ -96,7 +122,7 @@ const Jewelery = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div>}
     </div>
   );
 };

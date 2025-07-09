@@ -72,6 +72,8 @@ const UserDetail = () => {
                 <th className="border px-4 py-2">Name</th>
                 <th className="border px-4 py-2">Email</th>
                 <th className="border px-4 py-2">Role</th>
+                <th className="border px-2 py-2">Edit</th>
+                <th className="border px-2 py-2">Delete</th>
               </tr>
             </thead>
             <tbody>

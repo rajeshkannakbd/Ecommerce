@@ -3,9 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <div className="bg-slate-900   text-white px-4 pt-6">
-      {/* Top Footer Grid */}
       <div className="flex flex-col lg:flex-row flex-wrap justify-between gap-6 lg:gap-0 mx-auto py-10 px-10">
-        {/* Column 1 */}
         <div className="min-w-[200px]">
           <h1 className="text-slate-500 mb-2 text-lg font-normal">About</h1>
           <ul className="space-y-1 text-sm font-medium">
@@ -17,8 +15,6 @@ const Footer = () => {
             <li>Corporate Information</li>
           </ul>
         </div>
-
-        {/* Column 2 */}
         <div className="min-w-[200px]">
           <h1 className="text-slate-500 mb-2 text-lg font-normal">Group Companies</h1>
           <ul className="space-y-1 text-sm font-medium">
@@ -27,8 +23,6 @@ const Footer = () => {
             <li>ZZZ Company</li>
           </ul>
         </div>
-
-        {/* Column 3 */}
         <div className="min-w-[200px]">
           <h1 className="text-slate-500 mb-2 text-lg font-normal">Help</h1>
           <ul className="space-y-1 text-sm font-medium">
@@ -38,8 +32,6 @@ const Footer = () => {
             <li>FAQ</li>
           </ul>
         </div>
-
-        {/* Column 4 */}
         <div className="min-w-[200px]">
           <h1 className="text-slate-500 mb-2 text-lg font-normal">Customer Policy</h1>
           <ul className="space-y-1 text-sm font-medium">
@@ -51,8 +43,6 @@ const Footer = () => {
             <li>EPR Compliance</li>
           </ul>
         </div>
-
-        {/* Column 5 - Mail Us */}
         <div className="min-w-[200px] border-t lg:border-t-0 lg:border-l border-slate-700 pt-4 lg:pt-0 lg:pl-4">
           <h1 className="text-slate-500 mb-2 text-lg font-normal">Mail Us</h1>
           <ul className="space-y-1 text-sm font-medium">
@@ -71,8 +61,6 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-
-        {/* Column 6 - Registered Office */}
         <div className="min-w-[200px]">
           <h1 className="text-slate-500 mb-2 text-lg font-normal">
             Registered Office Address:
@@ -88,8 +76,7 @@ const Footer = () => {
       </div>
 
       <hr className="my-6 border-slate-700" />
-
-      {/* Bottom Footer Links */}
+      
       <div className="flex flex-wrap justify-center gap-4 text-sm text-slate-300 pb-6">
         <span>Become A Seller</span>
         <span>Advertise</span>

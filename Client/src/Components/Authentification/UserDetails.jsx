@@ -12,7 +12,6 @@ const UserDetails = () => {
     role,
     userName,
     setCartItems,
-    // setEmailuser, emailuser (uncomment if needed)
   } = useContext(cartContext);
 
   const navigate = useNavigate();
@@ -41,7 +40,7 @@ const UserDetails = () => {
           <p className="text-gray-700">{userName}</p>
         </div>
 
-        {/* Uncomment if you want to show email */}
+       
         {/* <div className="mb-4">
           <h2 className="font-bold text-lg">Email:</h2>
           <p className="text-gray-700">{emailuser}</p>

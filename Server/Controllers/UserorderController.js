@@ -1,6 +1,7 @@
 const { OrderModel } = require("../Models/User");
 
-// controllers/orderController.js
+/*__GETTING ROUTE BY USEREMAIL ROUTE__*/
+
 exports.getUserOrders = async (req, res) => {
   const { email } = req.query;
   try {
@@ -11,6 +12,9 @@ exports.getUserOrders = async (req, res) => {
     res.status(500).json({ message: "Server error while fetching user orders" });
   }
 };
+
+/*__UPADTING ORDERSTATUS ROUTE__*/
+
 exports.orderstatus = async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body;

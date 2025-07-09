@@ -1,4 +1,3 @@
-// Components/MainLayout.jsx
 import React from "react";
 import Header from "../Layots/Header";
 import Top from "../Layots/Top";

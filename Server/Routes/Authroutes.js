@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { register, login, order, product, newitem, deleteitem, singlePRoduct, getProductById, updateProduct, uploadProductWithImage, userDetails, orderDetails, createPayment, verifyPayment, deleteOrder, deleteuser, GetuserById, updateUser } = require("../Controllers/Authcontroller");
-const {upload} = require("../Middleware/Multer");
+const upload = require("../Middleware/Multer");
 const { getUserOrders, orderstatus } = require("../Controllers/UserorderController");
 
 router.post("/register", register);

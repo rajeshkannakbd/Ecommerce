@@ -21,7 +21,6 @@ const Homepage = () => {
 
   return (
     <div className="mt-8 px-4  sm:px-6 md:px-10">
-      {/* Hero Section */}
       <div className="relative w-full rounded-2xl overflow-hidden">
         <img
           src={images[currentIndex]}
@@ -41,8 +40,6 @@ const Homepage = () => {
           </a>
         </div>
       </div>
-
-      {/* CTA Button */}
       <div className="text-center mt-8">
         <a
           href="/products"
@@ -51,8 +48,6 @@ const Homepage = () => {
           Start Shopping
         </a>
       </div>
-
-      {/* Product List */}
       <div className="mt-8">
         <ProductsList />
       </div>
