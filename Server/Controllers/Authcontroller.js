@@ -373,7 +373,7 @@ exports.verifyPayment = async (req, res) => {
       mobileNumber,
       address,
       payment,
-      cartItems,
+      cart,
       total,
       orderstatus,
     } = orderDetails;
@@ -385,7 +385,7 @@ exports.verifyPayment = async (req, res) => {
         mobileNumber,
         address,
         payment,
-        cartItems: cartItems,
+        cartItems: cart,
         total,
         orderstatus,
       });

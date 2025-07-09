@@ -28,7 +28,7 @@ const Order = () => {
       mobileNumber,
       address,
       payment,
-      cartItems: [...cartItems],
+      cart: [...cartItems],
       total: Number(total),
       orderstatus,
     };
