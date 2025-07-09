@@ -55,14 +55,18 @@ exports.login = async (req, res) => {
 
     if (!user) {
       console.log("No user found with email:", email);
-      return res.status(404).json({ status: "error", message: "No user exists" });
+      return res
+        .status(404)
+        .json({ status: "error", message: "No user exists" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
       console.log("Invalid password for user:", email);
-      return res.status(401).json({ status: "error", message: "Invalid password" });
+      return res
+        .status(401)
+        .json({ status: "error", message: "Invalid password" });
     }
     res.status(200).json({
       status: "success",
@@ -77,7 +81,6 @@ exports.login = async (req, res) => {
     res.status(500).json({ status: "error", message: "Server error", err });
   }
 };
-
 
 /*__PRODUCT LISTING ROUtE__*/
 
@@ -168,11 +171,16 @@ exports.deleteitem = async (req, res) => {
 /*__ORDER PALCING USER DEATIS ROUTE__*/
 
 exports.order = async (req, res) => {
-  console.log("===> Order payload", req.body);
-  const { name, email, mobileNumber, address, payment, cartItems, total , orderstatus } =
-    req.body;
-   
-
+  const {
+    name,
+    email,
+    mobileNumber,
+    address,
+    payment,
+    cartItems,
+    total,
+    orderstatus,
+  } = req.body;
 
   if (
     !name ||
@@ -199,7 +207,6 @@ exports.order = async (req, res) => {
     });
 
     await newOrder.save();
-     console.log("✅ Order saved successfully");
     return res.status(201).json({ message: "Order placed successfully!" });
   } catch (error) {
     console.error("Error placing order:", error);
@@ -360,9 +367,16 @@ exports.verifyPayment = async (req, res) => {
   }
 
   if (expectedSignature === razorpay_signature) {
-   
-    const { name, email, mobileNumber, address, payment, cartItems, total , orderstatus } = orderDetails;
-      
+    const {
+      name,
+      email,
+      mobileNumber,
+      address,
+      payment,
+      cartItems,
+      total,
+      orderstatus,
+    } = orderDetails;
 
     try {
       const newOrder = new OrderModel({
@@ -375,7 +389,7 @@ exports.verifyPayment = async (req, res) => {
         total,
         orderstatus,
       });
-      
+
       await newOrder.save();
 
       // ✅ Send email without route
@@ -390,14 +404,14 @@ exports.verifyPayment = async (req, res) => {
       `;
 
       await sendOrderEmail(email, "Order Confirmation", emailBody);
-      
+
       return res.status(200).json({
         success: true,
         message: "Payment verified, order stored, and email sent",
       });
     } catch (err) {
       console.log("Error Saving Order or Sending Email:", err);
-      return  res.status(500).json({
+      return res.status(500).json({
         success: false,
         message: "Order saved but email sending failed",
       });
@@ -411,8 +425,8 @@ exports.verifyPayment = async (req, res) => {
 
 /*__DELETING ORDER ROUTE__*/
 
-exports.deleteOrder = async(req,res)=>{
-     const { id } = req.params;
+exports.deleteOrder = async (req, res) => {
+  const { id } = req.params;
   try {
     const deletedOrder = await OrderModel.findByIdAndDelete(id);
     if (!deletedOrder) {
@@ -423,12 +437,12 @@ exports.deleteOrder = async(req,res)=>{
     console.error("Delete error:", err);
     res.status(500).json({ message: "Server error during deletion" });
   }
-}
+};
 
 /*__DELETE USER ROUTE__*/
 
-exports.deleteuser = async(req,res)=>{
-     const { id } = req.params;
+exports.deleteuser = async (req, res) => {
+  const { id } = req.params;
   try {
     const deletedOrder = await UserModel.findByIdAndDelete(id);
     if (!deletedOrder) {
@@ -439,13 +453,13 @@ exports.deleteuser = async(req,res)=>{
     console.error("Delete error:", err);
     res.status(500).json({ message: "Server error during deletion" });
   }
-}
+};
 
 /*__GETTING SINGLE USER ROUTE__*/
 
-exports.GetuserById = async(req,res)=>{
-     const { id } = req.params;
-      console.log("Fetching user by ID:", id); 
+exports.GetuserById = async (req, res) => {
+  const { id } = req.params;
+  console.log("Fetching user by ID:", id);
   try {
     const User = await UserModel.findById(id);
     if (!User) return res.status(404).json({ message: "User not found" });
@@ -453,7 +467,7 @@ exports.GetuserById = async(req,res)=>{
   } catch (error) {
     res.status(500).json({ message: "Error retrieving User", error });
   }
-}
+};
 
 /*__UPDATING USER ROUTE__*/
 
@@ -471,7 +485,6 @@ exports.updateUser = async (req, res) => {
     res.status(500).json({ message: "Error updating User", error });
   }
 };
-
 
 /*__PRODUCT LISTING ROUTE USING FAKESTOREAPI__*/
 

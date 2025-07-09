@@ -41,7 +41,7 @@ const Order = () => {
       }
 
       try {
-        const { data } = await axios.post(`http://localhost:5000/create-payment`, {
+        const { data } = await axios.post(`${BASE_URL}/create-payment`, {
           total,
         });
 
@@ -53,7 +53,7 @@ const Order = () => {
           description: "Test Transaction",
           order_id: data.order.id,
           handler: async function (response) {
-            const verifyRes = await axios.post(`http://localhost:5000/verify-payment`, {
+            const verifyRes = await axios.post(`${BASE_URL}/verify-payment`, {
               ...response,
               orderDetails: orderData,
             });
@@ -84,7 +84,7 @@ const Order = () => {
       }
     } else {
       try {
-        const response = await axios.post(`http://localhost:5000/order`, orderData);
+        const response = await axios.post(`${BASE_URL}/order`, orderData);
         if (response.status === 201) {
           alert("Order placed successfully!");
           setCartItems([]);
