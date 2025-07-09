@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { BlinkBlur } from "react-loading-indicators"
 import axios from "axios";
 
 const HomepageDetails = () => {
   const [usercount, setUsercount] = useState(0);
   const [productcount, setProductcount] = useState(0);
+  const [loading,setLoading] = useState(true)
 
   useEffect(() => {
     axios.get("https://ecommerce-sjhs.onrender.com/users")
-      .then((data) => setUsercount(data.data.users.length));
+      .then((data) => {setUsercount(data.data.users.length);setLoading(false)});
   }, []);
 
   useEffect(() => {
     axios.get("https://ecommerce-sjhs.onrender.com/Product")
-      .then((data) => setProductcount(data.data.product.length));
+      .then((data) =>{ setProductcount(data.data.product.length);setLoading(false)});
   }, []);
 
   return (
@@ -21,7 +23,7 @@ const HomepageDetails = () => {
       <h1 className="text-center text-3xl font-semibold text-slate-600 mb-10">
         Admin Dashboard
       </h1>
-
+        {loading ? <center><div className=" mt-20 "> <BlinkBlur color="#315ecc" size="large" text="loading..." textColor="" /></div></center> : 
       <div className="flex flex-col md:flex-row justify-center items-center gap-8">
         {/* Product Card */}
         <div className="border-2 border-slate-300 shadow-md rounded-lg p-6 w-full max-w-xs">
@@ -79,6 +81,7 @@ const HomepageDetails = () => {
           </Link>
         </div>
       </div>
+      }
     </div>
   );
 };

@@ -1,17 +1,19 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import { BlinkBlur } from "react-loading-indicators"
 import { Link } from "react-router-dom";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [activeItem, setActiveItem] = useState("all");
+   const [loading,setLoading] = useState(true)
 
   useEffect(() => {
     fetch("https://ecommerce-sjhs.onrender.com/Product")
       .then((res) => res.json())
-      .then((data) => 
-        setProducts(data.product))
+      .then((data) =>{ 
+        setProducts(data.product);setLoading(false)})
       .catch((error) => console.error("Failed to fetch products:", error));
   }, []);
 
@@ -80,6 +82,7 @@ const Products = () => {
         <div className=" py-10 mx-4">
           <h1 className=" text-4xl font-thin">Prdoduct Management</h1>
         </div>
+          {loading ? <center><div className=" mt-20 "> <BlinkBlur color="#315ecc" size="large" text="loading..." textColor="" /></div></center> : 
         <div>
           <table className=" w-full">
             <thead>
@@ -155,7 +158,7 @@ const Products = () => {
               ))}
             </tbody>
           </table>
-        </div>
+        </div>}
       </div>
     </>
   );

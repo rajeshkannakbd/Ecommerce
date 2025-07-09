@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { BlinkBlur } from "react-loading-indicators"
 
 const OrderDetails = () => {
   const [orders, setOrders] = useState([]);
+  const [loading,setLoading] = useState(true)
 
   useEffect(() => {
     axios
       .get("https://ecommerce-sjhs.onrender.com/orderDetails")
       .then((data) => {
         setOrders(data.data.orders);
-        console.log(data.data.orders);
+        setLoading(false)
       })
       .catch((err) => console.log("Error while getting orders", err));
   }, []);
@@ -69,6 +71,7 @@ const OrderDetails = () => {
         <div className=" py-10 mx-4">
           <h1 className=" text-4xl font-thin">Order Management</h1>
         </div>
+        {loading ? <center><div className=" mt-20 "> <BlinkBlur color="#315ecc" size="large" text="loading..." textColor="" /></div></center> : 
         <div className="w-auto bg-slate-200 mx-10">
           <table className=" w-full">
             <thead>
@@ -186,7 +189,7 @@ const OrderDetails = () => {
               ))}
             </tbody>
           </table>
-        </div>
+        </div>}
       </div>
     </>
   );

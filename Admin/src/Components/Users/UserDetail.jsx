@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { BlinkBlur } from "react-loading-indicators"
 import { Link } from "react-router-dom";
 
 const UserDetail = () => {
   const [users, setUsers] = useState([]);
+  const [loading,setLoading] = useState(true)
 
   useEffect(() => {
     axios
       .get("https://ecommerce-sjhs.onrender.com/users")
-      .then((data) => setUsers(data.data.users))
+      .then((data) => {setUsers(data.data.users);setLoading(false)})
       .catch((err) => console.log("Error while getting Users", err));
   }, []);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?"))
       return;
-
     try {
       await axios.delete(`http://localhost:5000/deleteuser/${id}`);
       setUsers(users.filter((user) => user._id !== id));
@@ -63,7 +64,7 @@ const UserDetail = () => {
                 d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
               />
             </svg>
-        </div>
+        </div> {loading ? <center><div className=" mt-20 "> <BlinkBlur color="#315ecc" size="large" text="loading..." textColor="" /></div></center> : 
         <div className="w-auto bg-slate-200 mx-20">
           <table className="w-full border-collapse">
             <thead>
@@ -128,7 +129,7 @@ const UserDetail = () => {
               ))}
             </tbody>
           </table>
-        </div>
+        </div>}
       </div>
     </>
   );

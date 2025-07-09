@@ -15,8 +15,9 @@ const Header = () => {
 
   return (
     <>
+    <div className=" fixed top-0 w-full z-30">
       <Top />
-      <header className="w-full bg-white shadow-md fixed top-[54px] md:top-[36px] z-30">
+      <header className="w-full bg-white shadow-md z-30">
         <div className="flex justify-between items-center px-4 py-3 md:px-8">
           <Link to="/" className="flex items-center gap-2">
             <svg
@@ -228,7 +229,7 @@ const Header = () => {
             />
           </div>
         )}
-      </header>
+      </header></div>
     </>
   );
 };
