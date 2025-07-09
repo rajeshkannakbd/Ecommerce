@@ -177,7 +177,7 @@ exports.order = async (req, res) => {
     mobileNumber,
     address,
     payment,
-    cartItems,
+    cart,
     total,
     orderstatus,
   } = req.body;
@@ -188,7 +188,7 @@ exports.order = async (req, res) => {
     !mobileNumber ||
     !address ||
     !payment ||
-    !cartItems ||
+    !cart ||
     !total
   ) {
     return res.status(400).json({ message: "Missing required fields" });
@@ -201,7 +201,7 @@ exports.order = async (req, res) => {
       mobileNumber,
       address,
       payment,
-      cartItems: cartItems,
+      cartItems: cart,
       total,
       orderstatus,
     });
