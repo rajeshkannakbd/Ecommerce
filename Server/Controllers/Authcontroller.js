@@ -205,7 +205,6 @@ exports.order = async (req, res) => {
       total,
       orderstatus,
     });
-
     await newOrder.save();
     return res.status(201).json({ message: "Order placed successfully!" });
   } catch (error) {

@@ -52,13 +52,13 @@ const Top = () => {
         </div>
         <div className="flex items-center gap-2 sm:gap-3 flex-nowrap ml-auto whitespace-nowrap">
           <div className="hidden sm:block">
-          <select className="rounded-full px-2 bg-transparent text-white outline-none">
+          <select name="lang" id="lang" className="rounded-full px-2 bg-transparent text-white outline-none">
             <option className="text-black">Lang</option>
             <option className="text-black">English</option>
             <option className="text-black">Tamil</option>
             <option className="text-black">Hindi</option>
           </select>
-          <select className="rounded-full px-2 bg-transparent text-white outline-none">
+          <select name="location" id="location" className="rounded-full px-2 bg-transparent text-white outline-none">
             <option className="text-black">Location</option>
             <option className="text-black">Trichy</option>
             <option className="text-black">Chennai</option>

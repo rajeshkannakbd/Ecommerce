@@ -116,6 +116,8 @@ const Header = () => {
             </div>
             <div className="relative w-[200px]">
               <input
+              name="search"
+              id="search"
                 type="text"
                 placeholder="Search"
                 onChange={(e) => setSearch(e.target.value)}

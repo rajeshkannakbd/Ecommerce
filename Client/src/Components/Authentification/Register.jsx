@@ -38,7 +38,7 @@ const Register = () => {
               Name
             </label>
             <input
-              name="fakeName"
+              name="name"
               id="name"
               type="text"
               value={name}
@@ -59,7 +59,7 @@ const Register = () => {
               Email
             </label>
             <input
-              name="fakeEmail"
+              name="email"
               id="email"
               type="email"
               value={email}
@@ -76,6 +76,7 @@ const Register = () => {
           <div className="mb-6 relative w-full border border-slate-300 p-2 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-green-500">
             <input
               id="password"
+              name="password"
               type={show ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}

@@ -113,7 +113,7 @@ const OrderDetails = () => {
                   </td>
                   <td className="text-left text-nowrap border px-4 py-2">
                     <div className="space-y-2">
-                      {order.cart?.map((item, i) => (
+                      {order.cartItems?.map((item, i) => (
                         <div
                           key={i}
                           className="bg-gray-100 p-2 border border-slate-300 rounded"
