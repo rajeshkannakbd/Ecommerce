@@ -87,7 +87,7 @@ const MensClothing = () => {
                   {product.title}
                 </h2>
                 <p className="text-green-600 font-bold mb-1">
-                  ₹{(product.price * 83).toFixed(0)}
+                  ₹{(product.price).toFixed(0)}
                 </p>
                 <p className="text-sm text-gray-600 mb-2 line-clamp-2">
                   {product.desc}
@@ -100,7 +100,7 @@ const MensClothing = () => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-4 h-4 ml-1"
+                    className="w-4 h-4 text-yellow-500"
                   >
                     <path
                       strokeLinecap="round"

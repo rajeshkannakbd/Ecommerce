@@ -71,7 +71,7 @@ const ProductsList = () => {
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
                       stroke="currentColor"
-                      className="w-4 h-4 ml-1 text-yellow-500"
+                      className="w-4 h-4 text-yellow-500"
                     >
                       <path
                         strokeLinecap="round"
