@@ -33,7 +33,7 @@ const handleSubmit = async (e) => {
 
   try {
     const response = await axios.post(
-      "http://localhost:5000/upload-product",
+      "https://ecommerce-sjhs.onrender.com/upload-product",
       formData,
       
     );
