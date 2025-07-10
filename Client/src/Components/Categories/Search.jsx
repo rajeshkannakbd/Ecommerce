@@ -76,7 +76,7 @@ const Search = () => {
                     ₹{(product.price * 3).toFixed(0)}
                   </p>
                   <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                    {product.description}
+                    {product.desc}
                   </p>
                   <div className="flex flex-col sm:flex-row justify-between gap-2">
                     <button
