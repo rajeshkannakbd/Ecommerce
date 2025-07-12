@@ -94,7 +94,7 @@ const CreateProduct = () => {
    
     
 
-    const response = await axios.post("http://localhost:5000/newitem", {
+    const response = await axios.post("https://ecommerce-sjhs.onrender.com/newitem", {
       title,
       desc,
       price,
