@@ -106,7 +106,7 @@ const Products = () => {
                   <td className=" text-center p-2 border">
                     <img
                       src={product.image}
-                      className=" h-[70px] w-[70px] object-contain relative left-20 p-2"
+                      className=" h-[70px] w-[70px] object-contain "
                       alt={product.title}
                     />
                   </td>
