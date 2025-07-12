@@ -79,7 +79,7 @@ const Jewelery = () => {
             className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
           >
             <img
-              src={`${BASE_URL}/uploads/${product.image}`}
+              src={product.image}
               alt={product.title}
               className="h-48 w-full object-contain p-4 bg-white"
             />

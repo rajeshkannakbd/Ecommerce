@@ -52,7 +52,7 @@ const ProductsDetailPage = () => {
           <div className="w-full lg:w-1/2">
             <div className="border border-slate-200 shadow-md h-auto lg:h-[500px] w-full flex justify-center items-center relative">
               <img
-                src={`${BASE_URL}/uploads/${products.image}`}
+                src={products.image}
                 alt={products.title}
                 className="h-[300px] lg:h-[400px] object-contain"
               />

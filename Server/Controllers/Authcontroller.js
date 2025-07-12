@@ -109,9 +109,9 @@ exports.singlePRoduct = async (req, res) => {
 /*__ADDING NEW ITEM ROUTE__*/
 
 exports.newitem = async (req, res) => {
-  const { title, desc, price, category, rating, count } = req.body;
+  const { title, desc, price, category, rating, count ,image } = req.body;
 
-  if (!title || !desc || !price || !category || !rating || !count) {
+  if (!title || !desc || !price || !category || !rating || !count || !image) {
     return res.status(400).json({
       status: "error",
       message: "Give A Proper Details",
@@ -125,23 +125,15 @@ exports.newitem = async (req, res) => {
     category,
     rating,
     count,
+    image,
   });
-
   try {
     const savedItem = await newitem.save();
-    console.log("Unique ID:", savedItem._id);
 
     res.status(201).json({
       success: true,
       message: "new item api working",
-      item: {
-        title: savedItem.title,
-        desc: savedItem.desc,
-        price: savedItem.price,
-        category: savedItem.category,
-        rating: savedItem.rating,
-        count: savedItem,
-      },
+      item: savedItem,
     });
   } catch (err) {
     console.error("Save failed:", err);

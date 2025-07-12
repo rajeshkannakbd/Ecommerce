@@ -107,14 +107,14 @@ const handleSubmit = async (e) => {
           placeholder="Category"
           className="border p-2"
         />
-          <label htmlFor="images" className=" font-normal text-slate-500 text-lg -mb-3 ">Product Image : </label>
+          {/* <label htmlFor="images" className=" font-normal text-slate-500 text-lg -mb-3 ">Product Image : </label>
         <input
           name="images"
           value={formData.images}
           onChange={handleChange}
           placeholder="Image URL"
           className="border p-2"
-        />
+        /> */}
         <label htmlFor="rate" className=" font-normal text-slate-500 text-lg -mb-3 ">Product Ratings : </label>
         <input
           name="rating"

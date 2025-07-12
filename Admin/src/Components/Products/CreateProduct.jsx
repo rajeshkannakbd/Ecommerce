@@ -11,32 +11,98 @@ const CreateProduct = () => {
   const [file, setFile] = useState(null);
   const [count,setCount] = useState("")
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  console.log("Submitting product...");
-  console.log("File selected:", file);
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   console.log("Submitting product...");
+//   console.log("File selected:", file);
 
+
+//   if (!title || !desc || !price || !category || !file || !rating || !count) {
+//     alert("Please fill in all fields");
+//     return;
+//   }
+
+//   const formData = new FormData();
+//   formData.append("title", title);
+//   formData.append("desc", desc);
+//   formData.append("price", price);
+//   formData.append("category", category);
+//   formData.append("rating", rating);
+//   formData.append("file", file);
+//   formData.append("upload_preset","Ecommerce_products_image")
+//   formData.append("cloud_name","dh9fmwhsk")
+//   formData.append("count",count);
+
+//       const cloudRes = await axios.post(
+//       "https://api.cloudinary.com/v1_1/dh9fmwhsk/image/upload",
+//       formData
+//     );
+
+//     const imageUrl = cloudRes.data.secure_url;
+
+//   try {
+//     // const response = await axios.post(
+//     //   "https://ecommerce-sjhs.onrender.com/upload-product",
+//     //   formData,
+      
+//     // );
+
+//      const response = await axios.post("https://ecommerce-sjhs.onrender.com/newitem", {
+//       title,
+//       desc,
+//       price,
+//       category,
+//       rating,
+//       count,
+//       image: imageUrl,
+//     });
+
+//     if (response.status === 201) {
+//       alert("Product created successfully!");
+//       setTitle("");
+//       setDesc("");
+//       setPrice("");
+//       setCategory("");
+//       setRating("");
+//       setFile(null);
+      
+//     }
+//   } catch (error) {
+//     console.log("Upload error:", error);
+//     alert(error.response?.data?.message);
+//   }
+// };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
   if (!title || !desc || !price || !category || !file || !rating || !count) {
     alert("Please fill in all fields");
     return;
   }
 
-  const formData = new FormData();
-  formData.append("title", title);
-  formData.append("desc", desc);
-  formData.append("price", price);
-  formData.append("category", category);
-  formData.append("rating", rating);
-  formData.append("image", file);
-  formData.append("count",count)
-
   try {
-    const response = await axios.post(
-      "https://ecommerce-sjhs.onrender.com/upload-product",
-      formData,
-      
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "Ecommerce_products_image");
+
+    const cloudRes = await axios.post(
+      "https://api.cloudinary.com/v1_1/dh9fmwhsk/image/upload",
+      formData
     );
+
+    const imageUrl = cloudRes.data.secure_url;
+   
+    
+
+    const response = await axios.post("http://localhost:5000/newitem", {
+      title,
+      desc,
+      price,
+      category,
+      rating,
+      count,
+      image: imageUrl,
+    });
 
     if (response.status === 201) {
       alert("Product created successfully!");
@@ -45,12 +111,12 @@ const handleSubmit = async (e) => {
       setPrice("");
       setCategory("");
       setRating("");
+      setCount("");
       setFile(null);
-      
     }
   } catch (error) {
-    console.log("Upload error:", error);
-    alert(error.response?.data?.message);
+    console.error("Upload error:", error);
+    alert(error.response?.data?.message || "Upload failed");
   }
 };
 

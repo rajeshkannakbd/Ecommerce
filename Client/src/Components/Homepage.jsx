@@ -27,7 +27,7 @@ const Homepage = () => {
           alt="Homepage"
           className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] w-full object-cover transition-all duration-500"
         />
-        <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 sm:top-1/2 sm:left-[15%] sm:translate-x-0 text-center sm:text-left text-white font-bold text-xl sm:text-3xl md:text-4xl lg:text-5xl px-4">
+        <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 sm:top-1/3 sm:left-[10%] sm:translate-x-0 text-center sm:text-left text-white font-bold text-xl sm:text-3xl md:text-4xl lg:text-5xl px-4">
           <h2>
             Grab Upto 50% off on <br className="hidden sm:block" />
             Selected Headphones

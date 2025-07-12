@@ -203,7 +203,7 @@ const Header = () => {
             <Link to="/latestProducts" onClick={toggleMenu} className="block">
               What's New
             </Link>
-            <Link to="#" className="block">
+            <Link to="/orderhistory" className="block">
               Delivery
             </Link>
             {role === "admin" && (

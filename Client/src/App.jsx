@@ -1,9 +1,5 @@
-import { createContext, useState ,useEffect} from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { createContext, useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Homepage from "./Components/Homepage";
 import ProductsList from "./Components/Products/ProductsList";
@@ -40,8 +36,8 @@ function App() {
   const [search, setSearch] = useState("");
   const [isAunthencate, setIsAuthencate] = useState(false);
   const [userName, setUserName] = useState("");
-  const [useremail,setUseremail] =useState("")
-  const [role, setRole] = useState(""); 
+  const [useremail, setUseremail] = useState("");
+  const [role, setRole] = useState("");
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -49,7 +45,7 @@ function App() {
     <cartContext.Provider
       value={{
         cartItems,
-        setCartItems,
+        setCartItems, 
         isAunthencate,
         setIsAuthencate,
         userName,
@@ -57,33 +53,62 @@ function App() {
         role,
         setRole,
         useremail,
-        setUseremail
+        setUseremail,
       }}
     >
       <Totalcontext.Provider value={{ total, setTotal }}>
         <searchContext.Provider value={{ search, setSearch }}>
-        
-            <Routes>
-              <Route path="/" element={<MainLayout />}>
-                <Route index element={<Homepage />} />
-                <Route path="products" element={<ProductsList />} />
-                <Route path="men" element={<MensClothing />} />
-                <Route path="women" element={<WomensClothing />} />
-                <Route path="electronics" element={<Electronics />} />
-                <Route path="jewelery" element={<Jewelery />} />
-                <Route path="signup" element={<Register />} />
-                <Route path="login" element={<Login />} />
-                <Route path="/userdetails" element={<UserDetails />} />
-                <Route path="latestProducts" element={<NewProducts />} />
-                <Route path="ProductDetail/:id" element={<ProductsDetailPage />} />
-                <Route path="cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-                <Route path="order" element={<ProtectedRoute><Order /></ProtectedRoute>} />
-                <Route path="search" element={<Search />} />
-                <Route path="orderhistory" element={<ProtectedRoute><OrderHistoy /></ProtectedRoute>} />
-                <Route path="userdetails" element={<ProtectedRoute><UserDetails /></ProtectedRoute>} />
-              </Route>
-            </Routes>
-      
+          <Routes>
+             <Route path="/" element={<MainLayout />}>
+              <Route index element={<Homepage />} />
+              <Route path="products" element={<ProductsList />} />
+              <Route path="men" element={<MensClothing />} />
+              <Route path="women" element={<WomensClothing />} />
+              <Route path="electronics" element={<Electronics />} />
+              <Route path="jewelery" element={<Jewelery />} />
+              <Route path="signup" element={<Register />} />
+              <Route path="login" element={<Login />} />
+              <Route path="/userdetails" element={<UserDetails />} />
+              <Route path="latestProducts" element={<NewProducts />} />
+              <Route
+                path="ProductDetail/:id"
+                element={<ProductsDetailPage />}
+              />
+              <Route
+                path="cart"
+                element={
+                  <ProtectedRoute>
+                    <Cart />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="order"
+                element={
+                  <ProtectedRoute>
+                    <Order />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="search" element={<Search />} />
+              <Route
+                path="orderhistory"
+                element={
+                  <ProtectedRoute>
+                    <OrderHistoy />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="userdetails"
+                element={
+                  <ProtectedRoute>
+                    <UserDetails />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+          </Routes>
         </searchContext.Provider>
       </Totalcontext.Provider>
     </cartContext.Provider>

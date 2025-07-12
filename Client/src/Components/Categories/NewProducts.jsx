@@ -54,7 +54,7 @@ const NewProducts = () => {
             >
               <Link to={`/ProductDetail/${product._id}`}>
                 <img
-                  src={`${BASE_URL}/uploads/${product.image}`}
+                  src={product.image}
                   alt={product.title}
                   className="h-48 w-full object-contain p-4 bg-white"
                 />
