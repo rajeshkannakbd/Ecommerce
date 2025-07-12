@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { cartContext } from "../../App";
 import { BlinkBlur } from "react-loading-indicators";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -10,7 +10,7 @@ const ProductsDetailPage = () => {
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const { cartItems, setCartItems } = useContext(cartContext);
-
+  const navigate = useNavigate()
   useEffect(() => {
     axios
       .get(`${BASE_URL}/SingleProduct/${id}`)
