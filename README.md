@@ -1,4 +1,5 @@
 🛒 E-commerce Web Application
+
 📌 Overview
 
 This is a full-stack e-commerce platform developed as part of my internship at Zaalima Development. The project consists of three major components:
