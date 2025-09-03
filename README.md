@@ -1,5 +1,6 @@
 🛒 E-commerce Web Application
 
+
 📌 Overview
 
 This is a full-stack e-commerce platform developed as part of my internship at Zaalima Development. The project consists of three major components:
@@ -12,6 +13,7 @@ Backend API – A secure Node.js server that powers the client and admin apps.
 
 The goal of this project was to design and implement a scalable, secure, and user-friendly e-commerce solution, deployed on the cloud using Render.
 
+
 🚀 Live Demo
 
 Client App: client-v2xl.onrender.com
@@ -19,6 +21,7 @@ Client App: client-v2xl.onrender.com
 Admin Dashboard: ecommerce-1-admin.onrender.com
 
 Source Code: GitHub Repo
+
 
 ✨ Features
 👤 Client Features
@@ -33,6 +36,7 @@ Checkout and order placement.
 
 Order history and tracking.
 
+
 🛠️ Admin Features
 
 Secure admin login.
@@ -45,6 +49,7 @@ Order management and status updates.
 
 Sales dashboard and analytics.
 
+
 ⚙️ Backend Features
 
 RESTful APIs built with Node.js and Express.
@@ -56,6 +61,7 @@ Input validation and error handling.
 MongoDB integration for data storage.
 
 Modular and maintainable architecture.
+
 
 🏗️ Tech Stack
 
@@ -70,6 +76,7 @@ Authentication: JSON Web Tokens (JWT).
 Deployment: Render (with render.yaml).
 
 Version Control: Git + GitHub.
+
 
 ⚡ Installation
 
@@ -96,6 +103,7 @@ npm run dev
 
 The apps will start on local servers (commonly at http://localhost:3000).
 
+
 🛡️ Authentication
 
 Users and admins authenticate via JWT tokens.
@@ -103,6 +111,7 @@ Users and admins authenticate via JWT tokens.
 Protected routes ensure only logged-in users can access certain features.
 
 Role-based access is implemented for admins.
+
 
 🌐 Deployment
 
@@ -116,6 +125,7 @@ Backend API
 
 Configuration is handled using render.yaml for automated builds.
 
+
 📈 Future Enhancements
 
 Integration with payment gateways (Stripe/PayPal).
@@ -127,6 +137,7 @@ Real-time order notifications via email/SMS.
 Mobile app support (React Native/Flutter).
 
 Automated CI/CD pipelines for faster deployment.
+
 
 🧑‍💻 Author
 
