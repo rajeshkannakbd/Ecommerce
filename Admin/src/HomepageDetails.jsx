@@ -9,12 +9,12 @@ const HomepageDetails = () => {
   const [loading,setLoading] = useState(true)
 
   useEffect(() => {
-    axios.get("https://ecommerce-sjhs.onrender.com/users")
+    axios.get("http://localhost:5000/users")
       .then((data) => {setUsercount(data.data.users.length);setLoading(false)});
   }, []);
 
   useEffect(() => {
-    axios.get("https://ecommerce-sjhs.onrender.com/Product")
+    axios.get("http://localhost:5000/products")
       .then((data) =>{ setProductcount(data.data.product.length);setLoading(false)});
   }, []);
 

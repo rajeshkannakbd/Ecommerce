@@ -10,7 +10,7 @@ const Products = () => {
    const [loading,setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("https://ecommerce-sjhs.onrender.com/Product")
+    fetch("http://localhost:5000/Product")
       .then((res) => res.json())
       .then((data) =>{ 
         setProducts(data.product);setLoading(false)})
@@ -23,7 +23,7 @@ const Products = () => {
 
     try {
       await axios.delete(
-        `https://ecommerce-sjhs.onrender.com/deleteitem/${id}`
+        `http://localhost:5000/deleteitem/${id}`
       );
       setProducts(products.filter((product) => product._id !== id));
       alert("Product deleted successfully.");
