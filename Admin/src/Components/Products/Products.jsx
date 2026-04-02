@@ -10,7 +10,7 @@ const Products = () => {
    const [loading,setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("http://localhost:5000/Product")
+    fetch("https://ecommerce-sjhs.onrender.com/Product")
       .then((res) => res.json())
       .then((data) =>{ 
         setProducts(data.product);setLoading(false)})
